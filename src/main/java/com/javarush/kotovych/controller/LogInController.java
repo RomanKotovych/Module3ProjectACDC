@@ -32,7 +32,7 @@ public class LogInController {
                               HttpServletResponse response) {
         ModelAndView loginPage = new ModelAndView(Constants.LOGIN);
         if (!userService.checkIfCorrect(username, password)) {
-            log.debug(LoggerConstants.USER_NOT_FOUND_LOG, username);
+            log.info(LoggerConstants.USER_NOT_FOUND_LOG, username);
             loginPage.addObject(Constants.ERROR, Constants.USER_NOT_FOUND_OR_INCORRECT_PASSWORD);
             log.info(LoggerConstants.USER_NOT_FOUND_LOG, username);
             return loginPage;

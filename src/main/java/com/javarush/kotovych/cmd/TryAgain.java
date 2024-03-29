@@ -14,11 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TryAgain {
 
-
     @GetMapping("/try-again")
     public ModelAndView tryAgain(@RequestParam(Constants.NAME) String questName,
                                  HttpServletRequest request) {
-        log.debug(LoggerConstants.REDIRECTING_TO_QUEST_LOG, questName);
+        log.info(LoggerConstants.REDIRECTING_TO_QUEST_LOG, questName);
         log.info(LoggerConstants.USER_IS_TRYING_AGAIN_QUEST_LOG, questName);
         SessionAttributeSetter.addSessionAttribute(request, Constants.CURRENT_PART, Constants.START);
         return new ModelAndView(Constants.REDIRECT_QUEST_NAME + questName);

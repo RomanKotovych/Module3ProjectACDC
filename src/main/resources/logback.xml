@@ -8,21 +8,57 @@
     <import class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"/>
 
     <property name="LOG_DIR" value="logs"/>
-    <appender name="ROLLING_FILE" class="RollingFileAppender">
-        <file>${LOG_DIR}/quests.log</file>
+
+    <!-- Appender for Spring -->
+    <appender name="SPRING_ROLLING_FILE" class="RollingFileAppender">
+        <file>${LOG_DIR}/spring.log</file>
 
         <encoder class="PatternLayoutEncoder">
             <pattern>%date %level [%thread] %logger{36}:%line - %msg%n</pattern>
         </encoder>
 
         <rollingPolicy class="TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/quests.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/spring.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
     </appender>
 
-    <root level="debug">
-        <appender-ref ref="ROLLING_FILE"/>
-    </root>
+    <appender name="THYMELEAF_ROLLING_FILE" class="RollingFileAppender">
+        <file>${LOG_DIR}/thymeleaf.log</file>
+
+        <encoder class="PatternLayoutEncoder">
+            <pattern>%date %level [%thread] %logger{36}:%line - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/thymeleaf.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="MYAPP_ROLLING_FILE" class="RollingFileAppender">
+        <file>${LOG_DIR}/website.log</file>
+
+        <encoder class="PatternLayoutEncoder">
+            <pattern>%date %level [%thread] %logger{36}:%line - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/myapp.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.springframework" level="debug">
+        <appender-ref ref="SPRING_ROLLING_FILE"/>
+    </logger>
+
+    <logger name="org.thymeleaf" level="debug">
+        <appender-ref ref="THYMELEAF_ROLLING_FILE"/>
+    </logger>
+
+    <logger name="com.javarush.kotovych" level="info">
+        <appender-ref ref="MYAPP_ROLLING_FILE"/>
+    </logger>
 
 </configuration>

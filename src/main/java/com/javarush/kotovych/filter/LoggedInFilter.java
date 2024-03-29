@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.servlet.*;
@@ -18,7 +19,8 @@ import java.util.Optional;
 
 @Component
 @WebFilter(urlPatterns = "/*")
-public class LoggedInFilter implements Filter{
+@Slf4j
+public class LoggedInFilter implements Filter {
 
     @Autowired
     UserService userService;
@@ -28,7 +30,10 @@ public class LoggedInFilter implements Filter{
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        if(FilterUrlChecker.isAllowed(req.getRequestURI())) {
+        String uri = req.getRequestURI();
+        log.info("{} request to {}", req.getMethod(), uri);
+
+        if (FilterUrlChecker.isAllowed(uri)) {
 
             Cookie[] cookies = req.getCookies();
             String cookieName = Constants.ID;

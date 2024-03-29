@@ -41,7 +41,7 @@ public class EditUserController {
         user.setLogin(editUsername);
         user.setPassword(editPassword);
         userService.update(user);
-        log.debug(LoggerConstants.ACCOUNT_UPDATED_LOG, id);
+        log.info(LoggerConstants.ACCOUNT_UPDATED_LOG, id);
 
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }

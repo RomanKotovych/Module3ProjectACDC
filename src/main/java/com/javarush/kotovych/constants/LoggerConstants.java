@@ -11,4 +11,7 @@ public class LoggerConstants {
     public static final String USER_LOGGED_IN_LOG = "user {} logged in";
     public static final String QUEST_CREATED_LOG = "quest {} created";
     public static final String USER_NOT_FOUND_LOG = "User {} not found";
+    public static final String USER_ID_DELETED_LOG = "user {} deleted";
+    public static final String QUEST_ID_DELETED_LOG = "quest {} deleted";
+    public static final String USER_LOGGED_OUT_LOG = "user logged out";
 }

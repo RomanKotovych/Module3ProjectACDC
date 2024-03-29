@@ -1,7 +1,6 @@
 package com.javarush.kotovych.service;
 
 import com.javarush.kotovych.entity.User;
-import com.javarush.kotovych.exception.AppException;
 import com.javarush.kotovych.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -32,7 +32,7 @@ public class MainPageController {
         modelAndView.addObject(Constants.QUESTS, questService.getAll());
 
         User user = userService.getIfExists(id);
-        if(user != null){
+        if (user != null) {
             modelAndView.addObject(Constants.LOGGED_IN, true);
             modelAndView.addObject(Constants.USERNAME, user.getLogin());
         } else {

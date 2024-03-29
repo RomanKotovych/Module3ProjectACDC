@@ -19,7 +19,7 @@ public class QuestService {
     private final QuestRepository questRepository;
 
     @Autowired
-    public QuestService(QuestRepository questRepository){
+    public QuestService(QuestRepository questRepository) {
         this.questRepository = questRepository;
     }
 
@@ -67,17 +67,17 @@ public class QuestService {
 
     public void delete(long id) {
         Quest quest = getIfExists(id);
-        if(quest != null){
+        if (quest != null) {
             questRepository.delete(quest);
         }
     }
 
-    public Quest getIfExists(long id){
+    public Quest getIfExists(long id) {
         Optional<Quest> questOptional = get(id);
         return questOptional.orElse(null);
     }
 
-    public Quest getIfExists(String name){
+    public Quest getIfExists(String name) {
         Optional<Quest> questOptional = get(name);
         return questOptional.orElse(null);
     }
