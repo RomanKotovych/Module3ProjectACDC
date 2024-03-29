@@ -49,5 +49,5 @@ public class Constants {
     public static final String AUTHOR = "author";
     public static final String FAILED_TO_CREATE_QUEST = "failed to create quest";
 
-    public static List<String> NOT_FILTER_URLS = List.of("/", "/signup", "/login");
+    public static final List<String> NOT_FILTER_URLS = List.of("/", "/signup", "/login", "/css/", "/images/", "/js/");
 }

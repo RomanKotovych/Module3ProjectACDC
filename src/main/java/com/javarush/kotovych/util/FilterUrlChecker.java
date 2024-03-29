@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FilterUrlChecker {
     public static boolean isAllowed(String url){
-        return !Constants.NOT_FILTER_URLS.contains(url);
+        return Constants.NOT_FILTER_URLS.stream()
+                .noneMatch(url::startsWith);
     }
 }
