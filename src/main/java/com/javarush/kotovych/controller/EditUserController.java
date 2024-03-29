@@ -6,13 +6,12 @@ import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Optional;
-
 @Slf4j
-@RestController
+@Controller
 public class EditUserController {
     @Autowired
     private UserService userService;
@@ -20,10 +19,10 @@ public class EditUserController {
     @GetMapping("/edit-user")
     public ModelAndView getEditUserPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
-        if (userService.checkIfExists(id)) {
+        User user = userService.getIfExists(id);
+        if(user != null){
             log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
-            Optional<User> user = userService.get(id);
-            modelAndView.addObject(Constants.USER, user.get());
+            modelAndView.addObject(Constants.USER, user);
             return modelAndView;
         }
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
@@ -41,9 +40,8 @@ public class EditUserController {
             return editPage;
         }
 
-        if (userService.checkIfExists(id)) {
-            Optional<User> optionalUser = userService.get(id);
-            User user = optionalUser.get();
+        User user = userService.getIfExists(id);
+        if(user != null){
             user.setLogin(editUsername);
             user.setPassword(editPassword);
             userService.update(user);

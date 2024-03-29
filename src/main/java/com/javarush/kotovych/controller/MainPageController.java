@@ -7,12 +7,12 @@ import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class MainPageController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class MainPageController {
     private UserService userService;
 
     @GetMapping("/")
-    public ModelAndView mainPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) String id,
+    public ModelAndView mainPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id,
                                  HttpServletRequest request) {
 
         request.getSession().invalidate();
@@ -30,8 +30,9 @@ public class MainPageController {
 
         ModelAndView modelAndView = new ModelAndView(Constants.HOME_PAGE);
         modelAndView.addObject(Constants.QUESTS, questService.getAll());
-        if (userService.checkIfExists(Long.parseLong(id))) {
-            User user = userService.get(Long.parseLong(id)).get();
+
+        User user = userService.getIfExists(id);
+        if(user != null){
             modelAndView.addObject(Constants.LOGGED_IN, true);
             modelAndView.addObject(Constants.USERNAME, user.getLogin());
         } else {

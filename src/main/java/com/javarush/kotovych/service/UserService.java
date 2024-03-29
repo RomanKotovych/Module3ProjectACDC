@@ -11,9 +11,12 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    @Autowired
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public void create(User user) {
         userRepository.create(user);
@@ -40,8 +43,8 @@ public class UserService {
     }
 
     public boolean checkIfCorrect(String login, String password) {
-        if (checkIfExists(login)) {
-            User user = get(login).get();
+        User user = getIfExists(login);
+        if(user != null){
             return user.getPassword().equals(password);
         }
         return false;
@@ -58,9 +61,19 @@ public class UserService {
     }
 
     public void delete(long id) {
-        if (checkIfExists(id)) {
-            User user = get(id).get();
+        User user = getIfExists(id);
+        if(user != null){
             delete(user);
         }
+    }
+
+    public User getIfExists(long id){
+        Optional<User> userOptional = get(id);
+        return userOptional.orElse(null);
+    }
+
+    public User getIfExists(String username){
+        Optional<User> userOptional = get(username);
+        return userOptional.orElse(null);
     }
 }

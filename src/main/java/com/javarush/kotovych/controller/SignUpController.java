@@ -7,14 +7,14 @@ import com.javarush.kotovych.util.CookieSetter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
-@RestController
+@Controller
 public class SignUpController {
 
     @Autowired
@@ -30,10 +30,9 @@ public class SignUpController {
                                @RequestParam(Constants.PASSWORD) String password,
                                HttpServletResponse response) {
 
-        if (!userService.checkIfExists(username)) {
+        if(userService.checkIfExists(username)){
             User user = new User(username, password);
             userService.create(user);
-
             long id = user.getId();
             CookieSetter.addCookie(response, Constants.ID, String.valueOf(id));
 

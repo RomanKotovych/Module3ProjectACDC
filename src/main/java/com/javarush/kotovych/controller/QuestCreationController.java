@@ -9,12 +9,13 @@ import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.QuestParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Slf4j
-@RestController
+@Controller
 public class QuestCreationController {
 
     @Autowired
@@ -34,8 +35,8 @@ public class QuestCreationController {
     @PostMapping("/create-quest")
     public ModelAndView createQuest(@RequestParam(Constants.JSON) String json,
                                     @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        if (userService.checkIfExists(id)) {
-            User user = userService.get(id).get();
+        User user = userService.getIfExists(id);
+        if(user != null){
             String author = user.getLogin();
             Quest quest;
             try {

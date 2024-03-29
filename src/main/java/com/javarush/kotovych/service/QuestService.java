@@ -8,17 +8,20 @@ import com.javarush.kotovych.util.QuestParser;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Optional;
 
 @Service
-@RestController
 public class QuestService {
 
+
+    private final QuestRepository questRepository;
+
     @Autowired
-    private QuestRepository questRepository;
+    public QuestService(QuestRepository questRepository){
+        this.questRepository = questRepository;
+    }
 
     @PostConstruct
     public void init() {
@@ -55,16 +58,6 @@ public class QuestService {
         }
     }
 
-    public boolean checkIfExists(long id) {
-        Optional<Quest> userOptional = questRepository.get(id);
-        return userOptional.isPresent();
-    }
-
-    public boolean checkIfExists(String name) {
-        Optional<Quest> userOptional = questRepository.get(name);
-        return userOptional.isPresent();
-    }
-
     private void addDefaultQuests() {
         for (String path : Constants.DEFAULT_QUESTS) {
             Quest quest = QuestParser.parseFromJsonFile(MainPageController.class.getResource(path));
@@ -73,9 +66,19 @@ public class QuestService {
     }
 
     public void delete(long id) {
-        if (checkIfExists(id)) {
-            Quest quest = get(id).get();
+        Quest quest = getIfExists(id);
+        if(quest != null){
             questRepository.delete(quest);
         }
+    }
+
+    public Quest getIfExists(long id){
+        Optional<Quest> questOptional = get(id);
+        return questOptional.orElse(null);
+    }
+
+    public Quest getIfExists(String name){
+        Optional<Quest> questOptional = get(name);
+        return questOptional.orElse(null);
     }
 }

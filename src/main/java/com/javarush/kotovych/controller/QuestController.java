@@ -8,12 +8,12 @@ import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Optional;
 
-@RestController
+@Controller
 public class QuestController {
 
     @Autowired
@@ -31,16 +31,15 @@ public class QuestController {
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
         }
 
-        if (userService.checkIfExists(id)) {
-            User user = userService.get(id).get();
+        User user = userService.getIfExists(id);
+        if(user != null){
             setStatistics(user, currentPart);
 
             SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
 
-            if (questService.checkIfExists(questName)) {
+            Quest quest = questService.getIfExists(questName);
+            if(quest != null){
                 ModelAndView modelAndView = new ModelAndView(chooseTemplate(currentPart));
-                Optional<Quest> questOptional = questService.get(questName);
-                Quest quest = questOptional.get();
                 addRequiredObjects(modelAndView, quest, user, currentPart);
 
                 return modelAndView;

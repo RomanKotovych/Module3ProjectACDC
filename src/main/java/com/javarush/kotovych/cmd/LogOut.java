@@ -3,11 +3,11 @@ package com.javarush.kotovych.cmd;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.util.CookieSetter;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class LogOut {
 
     @PostMapping("/logout")
