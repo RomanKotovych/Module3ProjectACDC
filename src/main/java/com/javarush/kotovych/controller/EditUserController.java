@@ -20,12 +20,9 @@ public class EditUserController {
     public ModelAndView getEditUserPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
         User user = userService.getIfExists(id);
-        if(user != null){
-            log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
-            modelAndView.addObject(Constants.USER, user);
-            return modelAndView;
-        }
-        return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+        log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
+        modelAndView.addObject(Constants.USER, user);
+        return modelAndView;
     }
 
     @PostMapping("/edit-user")
@@ -41,12 +38,11 @@ public class EditUserController {
         }
 
         User user = userService.getIfExists(id);
-        if(user != null){
-            user.setLogin(editUsername);
-            user.setPassword(editPassword);
-            userService.update(user);
-            log.debug(LoggerConstants.ACCOUNT_UPDATED_LOG, id);
-        }
+        user.setLogin(editUsername);
+        user.setPassword(editPassword);
+        userService.update(user);
+        log.debug(LoggerConstants.ACCOUNT_UPDATED_LOG, id);
+
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }
 }

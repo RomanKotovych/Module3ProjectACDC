@@ -32,19 +32,17 @@ public class QuestController {
         }
 
         User user = userService.getIfExists(id);
-        if(user != null){
-            setStatistics(user, currentPart);
+        setStatistics(user, currentPart);
+        SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
 
-            SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
+        Quest quest = questService.getIfExists(questName);
+        if (quest != null) {
+            ModelAndView modelAndView = new ModelAndView(chooseTemplate(currentPart));
+            addRequiredObjects(modelAndView, quest, user, currentPart);
 
-            Quest quest = questService.getIfExists(questName);
-            if(quest != null){
-                ModelAndView modelAndView = new ModelAndView(chooseTemplate(currentPart));
-                addRequiredObjects(modelAndView, quest, user, currentPart);
-
-                return modelAndView;
-            }
+            return modelAndView;
         }
+
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }
 

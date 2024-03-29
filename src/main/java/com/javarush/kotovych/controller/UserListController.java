@@ -22,10 +22,7 @@ public class UserListController {
 
         User user = userService.getIfExists(id);
 
-        if(user != null){
-            modelAndView.addObject(Constants.USERNAME, user.getLogin());
-            return modelAndView;
-        }
-        return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+        modelAndView.addObject(Constants.USERNAME, user.getLogin());
+        return modelAndView;
     }
 }

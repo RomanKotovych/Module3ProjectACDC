@@ -2,8 +2,8 @@ package com.javarush.kotovych.filter;
 
 
 import com.javarush.kotovych.constants.Constants;
-import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
+import com.javarush.kotovych.util.FilterUrlChecker;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +14,10 @@ import jakarta.servlet.*;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Component
-@WebFilter(urlPatterns = {"/quest", "/create-quest", "/edit-user",
-        "user-list", "/delete-account", "/delete-quest", "/logout", "/try-again"})
+@WebFilter(urlPatterns = "/*")
 public class LoggedInFilter implements Filter{
 
     @Autowired
@@ -28,17 +28,23 @@ public class LoggedInFilter implements Filter{
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        Cookie[] cookies = req.getCookies();
-        String cookieName = Constants.ID;
+        if(FilterUrlChecker.isAllowed(req.getRequestURI())) {
 
-        String id = Arrays.stream(cookies).
-                filter(cookie -> cookie.getName().equals(cookieName))
-                .findFirst().
-                orElse(new Cookie("not found", "not found"))
-                .getValue();
+            Cookie[] cookies = req.getCookies();
+            String cookieName = Constants.ID;
 
-        if(!userService.checkIfExists(id)) {
-            resp.sendRedirect("/");
+            Optional<String> idCookieValue = Arrays.stream(cookies)
+                    .filter(cookie -> cookie.getName().equals(cookieName))
+                    .map(Cookie::getValue)
+                    .findFirst();
+
+            String id = idCookieValue.orElse(Constants.DEFAULT_ID);
+
+            if (!userService.checkIfExists(id)) {
+                resp.sendRedirect("/");
+                return;
+            }
         }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }
