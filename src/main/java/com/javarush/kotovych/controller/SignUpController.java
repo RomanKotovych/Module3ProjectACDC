@@ -30,7 +30,7 @@ public class SignUpController {
                                @RequestParam(Constants.PASSWORD) String password,
                                HttpServletResponse response) {
 
-        if(userService.checkIfExists(username)){
+        if(!userService.checkIfExists(username)){
             User user = new User(username, password);
             userService.create(user);
             long id = user.getId();

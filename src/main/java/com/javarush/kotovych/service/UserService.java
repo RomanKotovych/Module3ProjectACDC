@@ -1,7 +1,9 @@
 package com.javarush.kotovych.service;
 
 import com.javarush.kotovych.entity.User;
+import com.javarush.kotovych.exception.AppException;
 import com.javarush.kotovych.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +11,13 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -27,7 +30,9 @@ public class UserService {
     }
 
     public void delete(User user) {
-        userRepository.delete(user);
+        if (checkIfExists(user.getId())) {
+            userRepository.delete(user);
+        }
     }
 
     public Collection<User> getAll() {
@@ -44,7 +49,7 @@ public class UserService {
 
     public boolean checkIfCorrect(String login, String password) {
         User user = getIfExists(login);
-        if(user != null){
+        if (user != null) {
             return user.getPassword().equals(password);
         }
         return false;
@@ -62,17 +67,17 @@ public class UserService {
 
     public void delete(long id) {
         User user = getIfExists(id);
-        if(user != null){
+        if (user != null) {
             delete(user);
         }
     }
 
-    public User getIfExists(long id){
+    public User getIfExists(long id) {
         Optional<User> userOptional = get(id);
         return userOptional.orElse(null);
     }
 
-    public User getIfExists(String username){
+    public User getIfExists(String username) {
         Optional<User> userOptional = get(username);
         return userOptional.orElse(null);
     }
