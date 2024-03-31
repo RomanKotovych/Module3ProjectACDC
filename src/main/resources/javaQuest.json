@@ -35,7 +35,7 @@
       "situation": "Ваш код стал быстрее",
       "text": "Вы доработали старую функцию",
       "answers": {
-        "Сделать pull request": "(game-over)make-pr",
+        "Сделать коммит": "(game-over)make-commit",
         "Добавить что-то новое": "(game-over)add-something-new"
       }
     },
@@ -43,11 +43,11 @@
       "situation": "Код запустился",
       "text": "JVM стало вас жалко и она запустила код без ошибок",
       "answers": {
-        "Сделать pull request": "(win)pull-request-plus-new-functions",
+        "Сделать коммит": "(win)commit-plus-new-functions",
         "Закрыть проект": "(game-over)jvm-is-mad"
       }
     },
-    "(game-over)make-pr": {
+    "(game-over)make-commit": {
       "situation": "Поражение",
       "text": "Вы не добавили ничего нового"
     },
@@ -55,9 +55,9 @@
       "situation": "Поражение",
       "text": "Вы устали и запутались в коде"
     },
-    "(win)pull-request-plus-new-functions": {
+    "(win)commit-plus-new-functions": {
       "situation": "Победа",
-      "text": "Вы добавили что-то новое и сделали pull request"
+      "text": "Вы добавили что-то новое и сделали коммит"
     },
     "(game-over)jvm-is-mad": {
       "situation": "Поражение",
