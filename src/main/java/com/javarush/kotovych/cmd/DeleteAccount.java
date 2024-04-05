@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class DeleteAccount {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/delete-account")
     public ModelAndView deleteAccount(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {

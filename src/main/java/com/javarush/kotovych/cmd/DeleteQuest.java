@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class DeleteQuest {
 
     @Autowired
-    QuestService questService;
+    private QuestService questService;
 
     @PostMapping("/delete-quest")
     public ModelAndView deleteQuest(@RequestParam(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
