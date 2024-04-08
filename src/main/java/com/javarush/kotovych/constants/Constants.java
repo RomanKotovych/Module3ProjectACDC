@@ -14,7 +14,7 @@ public class Constants {
     public static final String MAIN_PAGE_REDIRECT = "redirect:/";
     public static final String NAME = "name";
     public static final String HOME_PAGE = "home";
-    public static final String GAME_OVER = "game-over";
+    public static final String GAME_OVER = "(game-over)";
     public static final String QUEST = "quest";
     public static final String QUESTION = "question";
     public static final String WIN_TEMPLATE = "winTemplate";
@@ -40,7 +40,7 @@ public class Constants {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String ID = "id";
-    public static final String WIN = "win";
+    public static final String WIN = "(win)";
     public static final String REDIRECT_QUEST_NAME = "redirect:/quest?name=";
 
     public static final List<String> DEFAULT_QUESTS = List.of("/javaQuest.json",

@@ -59,9 +59,9 @@ public class QuestController {
     }
 
     private String chooseTemplate(String currentPart) {
-        if (currentPart.contains(Constants.WIN)) {
+        if (currentPart.startsWith(Constants.WIN)) {
             return Constants.WIN_TEMPLATE;
-        } else if (currentPart.contains(Constants.GAME_OVER)) {
+        } else if (currentPart.startsWith(Constants.GAME_OVER)) {
             return Constants.GAME_OVER_TEMPLATE;
         } else {
             return Constants.QUEST_TEMPLATE;
@@ -69,10 +69,10 @@ public class QuestController {
     }
 
     private void setStatistics(User user, String currentPart) {
-        if (currentPart.contains(Constants.WIN)) {
+        if (currentPart.startsWith(Constants.WIN)) {
             int wins = user.getWins();
             user.setWins(wins + 1);
-        } else if (currentPart.contains(Constants.GAME_OVER)) {
+        } else if (currentPart.startsWith(Constants.GAME_OVER)) {
             int losses = user.getLosses();
             user.setLosses(losses + 1);
         }
