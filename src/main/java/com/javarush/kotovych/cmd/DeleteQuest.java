@@ -2,6 +2,7 @@ package com.javarush.kotovych.cmd;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
+import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.QuestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class DeleteQuest {
     @Autowired
     private QuestService questService;
 
-    @PostMapping("/delete-quest")
+    @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
     public ModelAndView deleteQuest(@RequestParam(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         questService.delete(id);
         log.info(LoggerConstants.QUEST_ID_DELETED_LOG, id);

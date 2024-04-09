@@ -2,6 +2,7 @@ package com.javarush.kotovych.cmd;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
+import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.util.CookieSetter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LogOut {
 
-    @PostMapping("/logout")
+    @PostMapping(UriConstants.LOGOUT_URI)
     public ModelAndView logout(HttpServletResponse response) {
         CookieSetter.addCookie(response, Constants.ID, Constants.DEFAULT_ID);
         log.info(LoggerConstants.USER_LOGGED_OUT_LOG);

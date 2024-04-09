@@ -2,6 +2,7 @@ package com.javarush.kotovych.cmd;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
+import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TryAgain {
 
-    @GetMapping("/try-again")
+    @GetMapping(UriConstants.TRY_AGAIN_URI)
     public ModelAndView tryAgain(@RequestParam(Constants.NAME) String questName,
                                  HttpServletRequest request) {
         log.info(LoggerConstants.REDIRECTING_TO_QUEST_LOG, questName);

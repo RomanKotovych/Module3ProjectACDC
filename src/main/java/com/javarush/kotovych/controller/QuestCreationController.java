@@ -2,6 +2,7 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
+import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.quest.Quest;
 import com.javarush.kotovych.service.QuestService;
@@ -24,7 +25,7 @@ public class QuestCreationController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/create-quest")
+    @GetMapping(UriConstants.CREATE_QUEST_URI)
     public ModelAndView getCreateQuestPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         if (userService.checkIfExists(id)) {
             return new ModelAndView(Constants.CREATE_QUEST);
@@ -32,7 +33,7 @@ public class QuestCreationController {
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }
 
-    @PostMapping("/create-quest")
+    @PostMapping(UriConstants.CREATE_QUEST_URI)
     public ModelAndView createQuest(@RequestParam(Constants.JSON) String json,
                                     @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         User user = userService.getIfExists(id);

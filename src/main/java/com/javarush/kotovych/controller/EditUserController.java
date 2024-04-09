@@ -2,6 +2,7 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
+import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ public class EditUserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/edit-user")
+    @GetMapping(UriConstants.EDIT_USER_URI)
     public ModelAndView getEditUserPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
         User user = userService.getIfExists(id);
@@ -25,7 +26,7 @@ public class EditUserController {
         return modelAndView;
     }
 
-    @PostMapping("/edit-user")
+    @PostMapping(UriConstants.EDIT_USER_URI)
     public ModelAndView editUser(@RequestParam(Constants.USERNAME) String editUsername,
                                  @RequestParam(Constants.PASSWORD) String editPassword,
                                  @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
