@@ -1,7 +1,6 @@
 package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
-import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.quest.Quest;
 import com.javarush.kotovych.service.QuestService;
@@ -23,7 +22,7 @@ public class QuestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(UriConstants.QUEST_URI)
+    @GetMapping("/quest")
     public ModelAndView showQuest(@RequestParam(value = Constants.NAME) String questName,
                                   @SessionAttribute(name = Constants.CURRENT_PART, required = false) String currentPart,
                                   @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id,
@@ -47,7 +46,7 @@ public class QuestController {
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }
 
-    @PostMapping(UriConstants.QUEST_URI)
+    @PostMapping("/quest")
     public ModelAndView changeCurrentPart(@RequestParam(value = Constants.CURRENT_PART, required = false) String currentPart,
                                           @SessionAttribute(value = Constants.NAME, required = false) String questName,
                                           HttpServletRequest request) {

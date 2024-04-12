@@ -2,7 +2,6 @@ package com.javarush.kotovych.cmd;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
-import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class DeleteAccount {
     @Autowired
     private UserService userService;
 
-    @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
+    @PostMapping("/delete-account")
     public ModelAndView deleteAccount(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         userService.delete(id);
         log.info(LoggerConstants.USER_ID_DELETED_LOG, id);
