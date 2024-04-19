@@ -18,7 +18,7 @@ public class DeleteQuest {
     @Autowired
     private QuestService questService;
 
-    @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
+    @PostMapping(UriConstants.DELETE_QUEST_URI)
     public ModelAndView deleteQuest(@RequestParam(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         questService.delete(id);
         log.info(LoggerConstants.QUEST_ID_DELETED_LOG, id);
