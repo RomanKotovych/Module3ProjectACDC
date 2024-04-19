@@ -1,7 +1,6 @@
 package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
-import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.CookieSetter;
@@ -21,12 +20,12 @@ public class SignUpController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(UriConstants.SIGNUP_URI)
+    @GetMapping("/signup")
     public ModelAndView getSignupPage() {
         return new ModelAndView(Constants.SIGNUP);
     }
 
-    @PostMapping(UriConstants.SIGNUP_URI)
+    @PostMapping("/signup")
     public ModelAndView signUp(@RequestParam(Constants.USERNAME) String username,
                                @RequestParam(Constants.PASSWORD) String password,
                                HttpServletResponse response) {

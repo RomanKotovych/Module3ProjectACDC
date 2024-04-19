@@ -2,7 +2,6 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
-import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.CookieSetter;
@@ -22,12 +21,12 @@ public class LogInController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(UriConstants.LOGIN_URI)
+    @GetMapping("/login")
     public ModelAndView getLoginPage() {
         return new ModelAndView(Constants.LOGIN);
     }
 
-    @PostMapping(UriConstants.LOGIN_URI)
+    @PostMapping("/login")
     public ModelAndView logIn(@RequestParam(Constants.USERNAME) String username,
                               @RequestParam(Constants.PASSWORD) String password,
                               HttpServletResponse response) {
