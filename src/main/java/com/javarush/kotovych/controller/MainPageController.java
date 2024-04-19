@@ -1,6 +1,7 @@
 package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
+import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.QuestService;
 import com.javarush.kotovych.service.UserService;
@@ -21,7 +22,7 @@ public class MainPageController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping(UriConstants.MAIN_PAGE_URI)
     public ModelAndView mainPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id,
                                  HttpServletRequest request) {
 
