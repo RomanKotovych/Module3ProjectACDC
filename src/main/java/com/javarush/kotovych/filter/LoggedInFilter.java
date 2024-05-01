@@ -2,6 +2,8 @@ package com.javarush.kotovych.filter;
 
 
 import com.javarush.kotovych.constants.Constants;
+import com.javarush.kotovych.constants.LoggerConstants;
+import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.FilterUrlChecker;
 import jakarta.servlet.annotation.WebFilter;
@@ -18,7 +20,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @Component
-@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = UriConstants.ALL_URIS)
 @Slf4j
 public class LoggedInFilter implements Filter {
 
@@ -31,7 +33,7 @@ public class LoggedInFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         String uri = req.getRequestURI();
-        log.info("{} request to {}", req.getMethod(), uri);
+        log.info(LoggerConstants.REQUEST_TO_LOG, req.getMethod(), uri);
 
         if (FilterUrlChecker.isAllowed(uri)) {
 
@@ -46,7 +48,7 @@ public class LoggedInFilter implements Filter {
             String id = idCookieValue.orElse(Constants.DEFAULT_ID);
 
             if (!userService.checkIfExists(id)) {
-                resp.sendRedirect("/");
+                resp.sendRedirect(UriConstants.MAIN_PAGE_URI);
                 return;
             }
         }

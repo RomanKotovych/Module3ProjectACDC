@@ -14,4 +14,5 @@ public class LoggerConstants {
     public static final String USER_ID_DELETED_LOG = "user {} deleted";
     public static final String QUEST_ID_DELETED_LOG = "quest {} deleted";
     public static final String USER_LOGGED_OUT_LOG = "user logged out";
+    public static final String REQUEST_TO_LOG = "{} request to {}";
 }
