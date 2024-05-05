@@ -13,4 +13,5 @@ public class UriConstants {
     public static final String USER_LIST_URI = "/user-list";
     public static final String DELETE_QUEST_URI = "/delete-quest";
     public static final String ALL_URIS = "/*";
+    public static final String EDIT_USER_REDIRECT = "redirect:/" + Constants.EDIT_USER;
 }

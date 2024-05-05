@@ -31,7 +31,7 @@ public class EditUserController {
                                  @RequestParam(Constants.PASSWORD) String editPassword,
                                  @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
 
-        ModelAndView editPage = new ModelAndView("redirect:/" + Constants.EDIT_USER);
+        ModelAndView editPage = new ModelAndView(UriConstants.EDIT_USER_REDIRECT);
 
 
         if (editUsername.isBlank() || editPassword.isBlank()) {
