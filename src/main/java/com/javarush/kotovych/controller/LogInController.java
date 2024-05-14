@@ -39,9 +39,12 @@ public class LogInController {
             return loginPage;
         }
         User user = userService.getIfExists(username);
-        long id = user.getId();
-        CookieSetter.addCookie(response, Constants.ID, String.valueOf(id));
-        log.info(LoggerConstants.USER_LOGGED_IN_LOG, username);
-        return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+        if(user != null) {
+            long id = user.getId();
+            CookieSetter.addCookie(response, Constants.ID, String.valueOf(id));
+            log.info(LoggerConstants.USER_LOGGED_IN_LOG, username);
+            return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+        }
+        return new ModelAndView(Constants.LOGIN);
     }
 }

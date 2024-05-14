@@ -4,7 +4,7 @@ import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
-import com.javarush.kotovych.quest.Quest;
+import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.service.QuestService;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.QuestParser;
@@ -38,7 +38,7 @@ public class QuestCreationController {
                                     @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         User user = userService.getIfExists(id);
         if (user != null) {
-            String author = user.getLogin();
+            String author = user.getUsername();
             Quest quest;
             try {
                 quest = QuestParser.parseFromJson(json);
@@ -50,7 +50,9 @@ public class QuestCreationController {
                 modelAndView.addObject(Constants.ERROR, true);
                 return modelAndView;
             }
-            questService.createIfNotExists(quest);
+            if (!questService.checkIfExists(quest.getName())) {
+                questService.create(quest);
+            }
             return new ModelAndView(Constants.REDIRECT_QUEST_NAME + quest.getName());
         }
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);

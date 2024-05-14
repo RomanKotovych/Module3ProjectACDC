@@ -3,7 +3,7 @@ package com.javarush.kotovych.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.exception.AppException;
-import com.javarush.kotovych.quest.Quest;
+import com.javarush.kotovych.entity.Quest;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 

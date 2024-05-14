@@ -39,7 +39,7 @@ public class EditUserController {
         }
 
         User user = userService.getIfExists(id);
-        user.setLogin(editUsername);
+        user.setUsername(editUsername);
         user.setPassword(editPassword);
         userService.update(user);
         log.info(LoggerConstants.ACCOUNT_UPDATED_LOG, id);

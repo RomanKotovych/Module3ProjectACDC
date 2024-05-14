@@ -19,7 +19,7 @@ public class DeleteAccount {
 
     @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
     public ModelAndView deleteAccount(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        userService.delete(id);
+        userService.delete(userService.getIfExists(id));
         log.info(LoggerConstants.USER_ID_DELETED_LOG, id);
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }

@@ -1,5 +1,6 @@
-package com.javarush.kotovych.quest;
+package com.javarush.kotovych.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Map;
@@ -10,10 +11,18 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "quests", schema = "game")
 public class Quest {
+    @Column
     private String name;
     private String description;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Transient
     private Map<String, Question> questions;
+
     private String author;
 }

@@ -45,7 +45,7 @@ public class LoggedInFilter implements Filter {
                     .map(Cookie::getValue)
                     .findFirst();
 
-            String id = idCookieValue.orElse(Constants.DEFAULT_ID);
+            long id = Long.parseLong(idCookieValue.orElse(Constants.DEFAULT_ID));
 
             if (!userService.checkIfExists(id)) {
                 resp.sendRedirect(UriConstants.MAIN_PAGE_URI);

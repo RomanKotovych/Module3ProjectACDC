@@ -1,83 +1,49 @@
 package com.javarush.kotovych.service;
 
+import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.Optional;
 
 @Service
 @Slf4j
-public class UserService {
+public class UserService extends UserRepository {
 
-    private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public void create(User user) {
-        userRepository.create(user);
-    }
-
-    public void update(User user) {
-        userRepository.update(user);
-    }
-
-    public void delete(User user) {
-        if (checkIfExists(user.getId())) {
-            userRepository.delete(user);
-        }
-    }
-
-    public Collection<User> getAll() {
-        return userRepository.getAll();
-    }
-
-    public Optional<User> get(long id) {
-        return userRepository.get(id);
-    }
-
-    public Optional<User> get(String login) {
-        return userRepository.get(login);
-    }
-
-    public boolean checkIfCorrect(String login, String password) {
-        User user = getIfExists(login);
-        if (user != null) {
-            return user.getPassword().equals(password);
-        }
-        return false;
+    public UserService() {
+        super(User.class);
     }
 
     public boolean checkIfExists(long id) {
-        Optional<User> userOptional = userRepository.get(id);
-        return userOptional.isPresent();
+        User user = get(id).orElse(null);
+        return user != null;
     }
 
-    public boolean checkIfExists(String username) {
-        Optional<User> userOptional = userRepository.get(username);
-        return userOptional.isPresent();
-    }
-
-    public void delete(long id) {
-        User user = getIfExists(id);
-        if (user != null) {
-            delete(user);
-        }
-    }
 
     public User getIfExists(long id) {
-        Optional<User> userOptional = get(id);
-        return userOptional.orElse(null);
+        return get(id).orElse(new User());
     }
 
     public User getIfExists(String username) {
-        Optional<User> userOptional = get(username);
-        return userOptional.orElse(null);
+        try (Session session = sessionFactory.createSession()) {
+            Query<User> query = session.createQuery("from User where username = :username", User.class);
+            query.setParameter(Constants.USERNAME, username);
+
+            return query.uniqueResult();
+        }
+    }
+
+    public boolean checkIfCorrect(String username, String password) {
+        try (Session session = sessionFactory.createSession()) {
+            Query<User> query = session.createQuery("from User where username = :username and password = :password", User.class);
+            query.setParameter(Constants.USERNAME, username);
+            query.setParameter(Constants.PASSWORD, password);
+
+            User user = query.uniqueResult();
+            return user != null;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.javarush.kotovych.quest;
+package com.javarush.kotovych.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

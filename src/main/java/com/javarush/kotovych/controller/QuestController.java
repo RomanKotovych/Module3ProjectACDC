@@ -3,7 +3,7 @@ package com.javarush.kotovych.controller;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
-import com.javarush.kotovych.quest.Quest;
+import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.service.QuestService;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
@@ -85,6 +85,6 @@ public class QuestController {
                                     String currentPart) {
         modelAndView.addObject(Constants.QUEST, quest);
         modelAndView.addObject(Constants.QUESTION, quest.getQuestions().get(currentPart));
-        modelAndView.addObject(Constants.AUTHOR, user.getLogin().equals(quest.getAuthor()));
+        modelAndView.addObject(Constants.AUTHOR, user.getUsername().equals(quest.getAuthor()));
     }
 }
