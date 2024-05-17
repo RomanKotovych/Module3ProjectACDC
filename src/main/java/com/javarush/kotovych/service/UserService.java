@@ -2,6 +2,7 @@ package com.javarush.kotovych.service;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.User;
+import com.javarush.kotovych.factory.SessionCreator;
 import com.javarush.kotovych.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -28,7 +29,7 @@ public class UserService extends UserRepository {
     }
 
     public User getIfExists(String username) {
-        try (Session session = sessionFactory.createSession()) {
+        try (Session session = SessionCreator.createSession()) {
             Query<User> query = session.createQuery("from User where username = :username", User.class);
             query.setParameter(Constants.USERNAME, username);
 
@@ -37,7 +38,7 @@ public class UserService extends UserRepository {
     }
 
     public boolean checkIfCorrect(String username, String password) {
-        try (Session session = sessionFactory.createSession()) {
+        try (Session session = SessionCreator.createSession()) {
             Query<User> query = session.createQuery("from User where username = :username and password = :password", User.class);
             query.setParameter(Constants.USERNAME, username);
             query.setParameter(Constants.PASSWORD, password);

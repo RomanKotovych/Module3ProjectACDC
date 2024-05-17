@@ -2,7 +2,7 @@ package com.javarush.kotovych.factory;
 
 import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.entity.User;
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.PreDestroy;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -10,11 +10,11 @@ import org.hibernate.cfg.Environment;
 
 import java.util.Properties;
 
-@RequiredArgsConstructor
-public class HibernateSessionFactory {
-    private final SessionFactory sessionFactory;
+public class SessionCreator{
+    private static final SessionFactory sessionFactory;
 
-    public HibernateSessionFactory() {
+
+    static  {
         Properties properties = new Properties();
         properties.put(Environment.DRIVER, "org.postgresql.Driver");
         properties.put(Environment.URL, "jdbc:postgresql://localhost:5432/game");
@@ -32,7 +32,13 @@ public class HibernateSessionFactory {
                 .buildSessionFactory();
     }
 
-    public Session createSession() {
+    public static Session createSession() {
         return sessionFactory.openSession();
+    }
+
+
+    @PreDestroy
+    public void close() {
+        sessionFactory.close();
     }
 }

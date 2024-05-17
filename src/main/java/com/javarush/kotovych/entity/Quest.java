@@ -11,7 +11,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "quests", schema = "game")
+@Table(name = "quests", schema = "public")
 public class Quest {
     @Column
     private String name;

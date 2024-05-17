@@ -3,6 +3,7 @@ package com.javarush.kotovych.service;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.controller.MainPageController;
 import com.javarush.kotovych.entity.Quest;
+import com.javarush.kotovych.factory.SessionCreator;
 import com.javarush.kotovych.repository.QuestRepository;
 import com.javarush.kotovych.util.QuestParser;
 import org.hibernate.Session;
@@ -34,7 +35,7 @@ public class QuestService extends QuestRepository {
 
 
     public boolean checkIfExists(String name) {
-        try (Session session = sessionFactory.createSession()) {
+        try (Session session = SessionCreator.createSession()) {
             Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
             query.setParameter(Constants.NAME, name);
 
@@ -48,7 +49,7 @@ public class QuestService extends QuestRepository {
     }
 
     public Quest getIfExists(String name) {
-        try (Session session = sessionFactory.createSession()) {
+        try (Session session = SessionCreator.createSession()) {
             Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
             query.setParameter(Constants.NAME, name);
 

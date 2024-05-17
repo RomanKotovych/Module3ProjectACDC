@@ -35,8 +35,6 @@ public class MainPageController {
 
         ModelAndView modelAndView = new ModelAndView(Constants.HOME_PAGE);
 
-//        modelAndView.addObject(Constants.QUESTS, questService.getAll());
-
         List<Quest> fakeQuests = new ArrayList<>();
         modelAndView.addObject(Constants.QUEST, fakeQuests);
 
