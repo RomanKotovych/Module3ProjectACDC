@@ -36,7 +36,7 @@
         </rollingPolicy>
     </appender>
 
-    <appender name="MYAPP_ROLLING_FILE" class="RollingFileAppender">
+    <appender name="WEBSITE_ROLLING_FILE" class="RollingFileAppender">
         <file>${LOG_DIR}/website.log</file>
 
         <encoder class="PatternLayoutEncoder">
@@ -44,7 +44,7 @@
         </encoder>
 
         <rollingPolicy class="TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/myapp.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/website.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
     </appender>
@@ -58,7 +58,7 @@
     </logger>
 
     <logger name="com.javarush.kotovych" level="info">
-        <appender-ref ref="MYAPP_ROLLING_FILE"/>
+        <appender-ref ref="WEBSITE_ROLLING_FILE"/>
     </logger>
 
 </configuration>
