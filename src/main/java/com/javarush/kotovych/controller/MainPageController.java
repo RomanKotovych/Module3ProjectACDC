@@ -35,8 +35,7 @@ public class MainPageController {
 
         ModelAndView modelAndView = new ModelAndView(Constants.HOME_PAGE);
 
-        List<Quest> fakeQuests = new ArrayList<>();
-        modelAndView.addObject(Constants.QUEST, fakeQuests);
+        modelAndView.addObject(Constants.QUESTS, questService.getAll());
 
         boolean exists = userService.checkIfExists(id);
         if (exists) {

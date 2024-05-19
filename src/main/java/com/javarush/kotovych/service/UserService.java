@@ -18,6 +18,7 @@ public class UserService extends UserRepository {
         super(User.class);
     }
 
+
     public boolean checkIfExists(long id) {
         User user = get(id).orElse(null);
         return user != null;

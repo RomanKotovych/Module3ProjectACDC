@@ -1,6 +1,7 @@
 package com.javarush.kotovych.factory;
 
 import com.javarush.kotovych.entity.Quest;
+import com.javarush.kotovych.entity.Question;
 import com.javarush.kotovych.entity.User;
 import jakarta.annotation.PreDestroy;
 import org.hibernate.Session;
@@ -29,6 +30,7 @@ public class SessionCreator{
                 .setProperties(properties)
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Quest.class)
+                .addAnnotatedClass(Question.class)
                 .buildSessionFactory();
     }
 

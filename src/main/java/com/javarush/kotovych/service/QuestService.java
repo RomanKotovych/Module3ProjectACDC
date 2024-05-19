@@ -6,15 +6,13 @@ import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.factory.SessionCreator;
 import com.javarush.kotovych.repository.QuestRepository;
 import com.javarush.kotovych.util.QuestParser;
+import jakarta.annotation.PostConstruct;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
 @Service
 public class QuestService extends QuestRepository {
-
-
-
 
     public QuestService() {
         super(Quest.class);
@@ -24,14 +22,14 @@ public class QuestService extends QuestRepository {
 //    public void init() {
 //        addDefaultQuests();
 //    }
-
-
-    private void addDefaultQuests() {
-        for (String path : Constants.DEFAULT_QUESTS) {
-            Quest quest = QuestParser.parseFromJsonFile(MainPageController.class.getResource(path));
-            create(quest);
-        }
-    }
+//
+//
+//    private void addDefaultQuests() {
+//        for (String path : Constants.DEFAULT_QUESTS) {
+//            Quest quest = QuestParser.parseFromJsonFile(MainPageController.class.getResource(path));
+//            create(quest);
+//        }
+//    }
 
 
     public boolean checkIfExists(String name) {
