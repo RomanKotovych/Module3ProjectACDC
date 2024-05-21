@@ -11,11 +11,11 @@ import org.hibernate.cfg.Environment;
 
 import java.util.Properties;
 
-public class SessionCreator{
+public class SessionCreator {
     private static final SessionFactory sessionFactory;
 
 
-    static  {
+    static {
         Properties properties = new Properties();
         properties.put(Environment.DRIVER, "org.postgresql.Driver");
         properties.put(Environment.URL, "jdbc:postgresql://localhost:5432/game");

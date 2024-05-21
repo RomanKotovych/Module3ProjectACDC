@@ -2,7 +2,6 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
-import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.QuestService;
 import com.javarush.kotovych.service.UserService;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class MainPageController {
