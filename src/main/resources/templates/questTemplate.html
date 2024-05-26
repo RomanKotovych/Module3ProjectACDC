@@ -31,10 +31,10 @@
             </div>
             <div class="text-center">
                 <form action="/quest" method="post">
-                    <div th:each="entry : ${question.getAnswers().entrySet()}">
+                    <div th:each="answer : ${question.getAnswers()}">
                         <input type="hidden" name="name" th:value="${quest.getName()}"/>
-                        <button type="submit" name="currentPart" th:value="${entry.getValue()}"
-                                th:text="${entry.getKey()}" class="btn btn-primary mr-2 mb-1">text
+                        <button type="submit" name="currentPart" th:value="${answer.getNextQuestion()}"
+                                th:text="${answer.getText()}" class="btn btn-primary mr-2 mb-1">text
                         </button>
                     </div>
                 </form>

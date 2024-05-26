@@ -1,5 +1,6 @@
 package com.javarush.kotovych.factory;
 
+import com.javarush.kotovych.entity.Answer;
 import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.entity.Question;
 import com.javarush.kotovych.entity.User;
@@ -31,6 +32,7 @@ public class SessionCreator {
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Quest.class)
                 .addAnnotatedClass(Question.class)
+                .addAnnotatedClass(Answer.class)
                 .buildSessionFactory();
     }
 

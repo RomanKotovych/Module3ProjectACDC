@@ -2,6 +2,7 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
+import com.javarush.kotovych.entity.Question;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.service.QuestService;
@@ -73,9 +74,11 @@ public class QuestController {
         if (currentPart.startsWith(Constants.WIN)) {
             int wins = user.getWins();
             user.setWins(wins + 1);
+            userService.update(user);
         } else if (currentPart.startsWith(Constants.GAME_OVER)) {
             int losses = user.getLosses();
             user.setLosses(losses + 1);
+            userService.update(user);
         }
     }
 
@@ -83,8 +86,12 @@ public class QuestController {
                                     Quest quest,
                                     User user,
                                     String currentPart) {
+        Question question = quest.getQuestions().stream()
+                        .filter(o -> o.getName().equals(currentPart))
+                        .findFirst().orElse(null);
+
         modelAndView.addObject(Constants.QUEST, quest);
-        modelAndView.addObject(Constants.QUESTION, quest.getQuestions().get(currentPart));
+        modelAndView.addObject(Constants.QUESTION, question);
         modelAndView.addObject(Constants.AUTHOR, user.getUsername().equals(quest.getAuthor()));
     }
 }

@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 public abstract class BaseRepository<T> implements Repository<T> {
@@ -22,6 +23,7 @@ public abstract class BaseRepository<T> implements Repository<T> {
             Query<T> query = session.createQuery("from %s".formatted(entityClass.getName()), entityClass);
             return query.list();
         }
+
     }
 
     @Override
