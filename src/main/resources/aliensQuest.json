@@ -2,110 +2,177 @@
   "name": "Alien Encounter",
   "description": "ChatGPT generated",
   "author": "default",
-  "questions": {
-    "start": {
+  "questions": [
+    {
+      "name": "start",
       "situation": "Вы на планете, населенной инопланетянами",
       "text": "Что делать?",
-      "answers": {
-        "Исследовать местность": "explore-planet",
-        "Попробовать установить контакт": "attempt-contact"
-      }
+      "answers": [
+        {
+          "text": "Исследовать местность",
+          "nextQuestion": "explore-planet"
+        },
+        {
+          "text": "Попробовать установить контакт",
+          "nextQuestion": "attempt-contact"
+        }
+      ]
     },
-    "explore-planet": {
+    {
+      "name": "explore-planet",
       "situation": "Обнаружили странные растения и существа",
       "text": "Что делать?",
-      "answers": {
-        "Собрать образцы": "collect-samples",
-        "Вернуться к кораблю": "return-to-ship"
-      }
+      "answers": [
+        {
+          "text": "Собрать образцы",
+          "nextQuestion": "collect-samples"
+        },
+        {
+          "text": "Вернуться к кораблю",
+          "nextQuestion": "return-to-ship"
+        }
+      ]
     },
-    "attempt-contact": {
+    {
+      "name": "attempt-contact",
       "situation": "Попытка установить контакт с инопланетянами",
       "text": "Как?",
-      "answers": {
-        "Показать дружелюбие": "friendly-gesture",
-        "Использовать технологию": "use-technology"
-      }
+      "answers": [
+        {
+          "text": "Показать дружелюбие",
+          "nextQuestion": "friendly-gesture"
+        },
+        {
+          "text": "Использовать технологию",
+          "nextQuestion": "use-technology"
+        }
+      ]
     },
-    "collect-samples": {
+    {
+      "name": "collect-samples",
       "situation": "Собрали образцы",
       "text": "Что с ними делать?",
-      "answers": {
-        "Продолжить исследования": "continue-exploring",
-        "Вернуться на корабль": "return-to-ship"
-      }
+      "answers": [
+        {
+          "text": "Продолжить исследования",
+          "nextQuestion": "continue-exploring"
+        },
+        {
+          "text": "Вернуться на корабль",
+          "nextQuestion": "return-to-ship"
+        }
+      ]
     },
-    "return-to-ship": {
+    {
+      "name": "return-to-ship",
       "situation": "Вернулись на корабль",
       "text": "Что дальше?",
-      "answers": {
-        "Продолжить исследования": "continue-exploring",
-        "Вернуться на базу": "return-to-base"
-      }
+      "answers": [
+        {
+          "text": "Продолжить исследования",
+          "nextQuestion": "continue-exploring"
+        },
+        {
+          "text": "Вернуться на базу",
+          "nextQuestion": "return-to-base"
+        }
+      ]
     },
-    "friendly-gesture": {
+    {
+      "name": "friendly-gesture",
       "situation": "Дружелюбие не сработало",
       "text": "Что теперь?",
-      "answers": {
-        "Попробовать ещё раз": "attempt-contact",
-        "Вернуться на корабль": "return-to-ship"
-      }
+      "answers": [
+        {
+          "text": "Попробовать ещё раз",
+          "nextQuestion": "attempt-contact"
+        },
+        {
+          "text": "Вернуться на корабль",
+          "nextQuestion": "return-to-ship"
+        }
+      ]
     },
-    "use-technology": {
+    {
+      "name": "use-technology",
       "situation": "Технология помогла установить контакт",
       "text": "Дальше что?",
-      "answers": {
-        "Обмениваться знаниями": "(win)exchange-knowledge",
-        "Попросить помощи в технологиях": "(win)ask-for-technology-help"
-      }
+      "answers": [
+        {
+          "text": "Обмениваться знаниями",
+          "nextQuestion": "(win)exchange-knowledge"
+        },
+        {
+          "text": "Попросить помощи в технологиях",
+          "nextQuestion": "(win)ask-for-technology-help"
+        }
+      ]
     },
-    "continue-exploring": {
+    {
+      "name": "continue-exploring",
       "situation": "Продолжили исследования",
       "text": "Следующий шаг?",
-      "answers": {
-        "Изучить артефакты": "(win)study-artifacts",
-        "Найти исследовательские объекты": "(win)discover-research-facilities"
-      }
+      "answers": [
+        {
+          "text": "Изучить артефакты",
+          "nextQuestion": "(win)study-artifacts"
+        },
+        {
+          "text": "Найти исследовательские объекты",
+          "nextQuestion": "(win)discover-research-facilities"
+        }
+      ]
     },
-    "return-to-base": {
+    {
+      "name": "return-to-base",
       "situation": "Вернулись на базу",
       "text": "Что дальше?",
-      "answers": {
-        "Составить отчёт": "(win)write-report",
-        "Отправить новую экспедицию": "(win)send-expedition"
-      }
+      "answers": [
+        {
+          "text": "Составить отчёт",
+          "nextQuestion": "(win)write-report"
+        },
+        {
+          "text": "Отправить новую экспедицию",
+          "nextQuestion": "(win)send-expedition"
+        }
+      ]
     },
-    "(win)exchange-knowledge": {
+    {
+      "name": "(win)exchange-knowledge",
       "situation": "Успешный обмен знаниями",
-      "text": "Поздравляю, вы достигли успеха в вашем путешествии!"
+      "text": "Поздравляю, вы достигли успеха в вашем путешествии!",
+      "answers": []
     },
-    "(win)ask-for-technology-help": {
+    {
+      "name": "(win)ask-for-technology-help",
       "situation": "Инопланетяне помогли вам",
-      "text": "Вы смогли получить новые знания и технологии для дальнейших исследований. Поздравляю, ваша миссия успешна!"
+      "text": "Вы смогли получить новые знания и технологии для дальнейших исследований. Поздравляю, ваша миссия успешна!",
+      "answers": []
     },
-    "(win)save-data": {
-      "situation": "Сохранили данные",
-      "text": "Ваши находки могут стать ключом к новым открытиям в науке. Поздравляю с успешным завершением экспедиции!"
-    },
-    "(win)share-data": {
-      "situation": "Поделились данными",
-      "text": "Ваши исследования помогут другим ученым в изучении инопланетной жизни. Поздравляю с успешным завершением экспедиции!"
-    },
-    "(win)study-artifacts": {
+    {
+      "name": "(win)study-artifacts",
       "situation": "Изучили артефакты",
-      "text": "Ваши открытия могут раскрыть тайны инопланетной цивилизации. Поздравляю с успешным завершением экспедиции!"
+      "text": "Ваши открытия могут раскрыть тайны инопланетной цивилизации. Поздравляю с успешным завершением экспедиции!",
+      "answers": []
     },
-    "(win)discover-research-facilities": {
+    {
+      "name": "(win)discover-research-facilities",
       "situation": "Обнаружили исследовательские объекты",
-      "text": "Эти объекты могут содержать важные знания для дальнейших исследований. Поздравляю с успешным завершением экспедиции!"
+      "text": "Эти объекты могут содержать важные знания для дальнейших исследований. Поздравляю с успешным завершением экспедиции!",
+      "answers": []
     },
-    "(win)write-report": {
+    {
+      "name": "(win)write-report",
       "situation": "Составили отчёт о проделанной работе",
-      "text": "Ваш отчёт станет основой для дальнейших исследований. Поздравляю с успешным завершением экспедиции!"
+      "text": "Ваш отчёт станет основой для дальнейших исследований. Поздравляю с успешным завершением экспедиции!",
+      "answers": []
     },
-    "(win)send-expedition": {
+    {
+      "name": "(win)send-expedition",
       "situation": "Отправили экспедицию на дальнейшие исследования",
-      "text": "Ваши результаты будут использованы для новых открытий. Поздравляю с успешным завершением экспедиции!"
+      "text": "Ваши результаты будут использованы для новых открытий. Поздравляю с успешным завершением экспедиции!",
+      "answers": []
     }
-  }
+  ]
 }

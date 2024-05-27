@@ -43,8 +43,7 @@ public class Constants {
     public static final String WIN = "(win)";
     public static final String REDIRECT_QUEST_NAME = "redirect:/quest?name=";
 
-    public static final List<String> DEFAULT_QUESTS = List.of("/javaQuest.json",
-            "/aliensQuest.json",
+    public static final List<String> DEFAULT_QUESTS = List.of("/aliensQuest.json",
             "/javaTestQuest.json");
     public static final String AUTHOR = "author";
     public static final String FAILED_TO_CREATE_QUEST = "failed to create quest";

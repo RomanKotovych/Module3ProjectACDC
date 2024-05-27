@@ -2,86 +2,170 @@
   "name": "Java Test",
   "description": "Разные вопросы про Java",
   "author": "default",
-  "questions": {
-    "start": {
+  "questions": [
+    {
+      "name": "start",
       "situation": "Первый вопрос",
       "text": "Что такое многопоточность (multithreading) в Java?",
-      "answers": {
-        "Это возможность выполнения нескольких потоков в одном приложении для повышения производительности": "next-question",
-        "Это методика оптимизации работы с памятью": "(game-over)incorrect-answer",
-        "Это процесс создания нескольких экземпляров одного класса": "(game-over)incorrect-answer"
-      }
+      "answers": [
+        {
+          "text": "Это возможность выполнения нескольких потоков в одном приложении для повышения производительности",
+          "nextQuestion": "next-question"
+        },
+        {
+          "text": "Это методика оптимизации работы с памятью",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "Это процесс создания нескольких экземпляров одного класса",
+          "nextQuestion": "(game-over)incorrect-answer"
+        }
+      ]
     },
-    "(game-over)incorrect-answer": {
+    {
+      "name": "(game-over)incorrect-answer",
       "situation": "Вы дали неверный ответ.",
-      "text": "К сожалению, это неправильный ответ. Спасибо за участие. Попробуйте еще раз!"
+      "text": "К сожалению, это неправильный ответ. Спасибо за участие. Попробуйте еще раз!",
+      "answers": []
     },
-    "next-question": {
+    {
+      "name": "next-question",
       "situation": "Следующий вопрос:",
       "text": "Что такое синхронизация (synchronization) в многопоточных приложениях?",
-      "answers": {
-        "Это методика определения порядка выполнения потоков": "(game-over)incorrect-answer",
-        "Это процесс слияния нескольких потоков в один для ускорения работы программы": "(game-over)incorrect-answer",
-        "Это механизм, который предотвращает одновременный доступ нескольких потоков к общим данным": "third-question"
-      }
+      "answers": [
+        {
+          "text": "Это методика определения порядка выполнения потоков",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "Это процесс слияния нескольких потоков в один для ускорения работы программы",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "Это механизм, который предотвращает одновременный доступ нескольких потоков к общим данным",
+          "nextQuestion": "third-question"
+        }
+      ]
     },
-    "third-question": {
+    {
+      "name": "third-question",
       "situation": "Следующий вопрос:",
       "text": "Что такое deadlock в многопоточных приложениях?",
-      "answers": {
-        "Это ситуация, когда поток зависает пытаясь выполнить код с ошибками ": "(game-over)incorrect-answer",
-        "это ситуация, когда два или более потоков блокируются, ожидая друг друга, чтобы освободить занятые ими ресурсы": "fourth-question",
-        "Это ситуация, когда поток выполняется дольше, чем ожидалось, из-за неправильной настройки приоритетов": "(game-over)incorrect-answer"
-      }
+      "answers": [
+        {
+          "text": "Это ситуация, когда поток зависает пытаясь выполнить код с ошибками",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "это ситуация, когда два или более потоков блокируются, ожидая друг друга, чтобы освободить занятые ими ресурсы",
+          "nextQuestion": "fourth-question"
+        },
+        {
+          "text": "Это ситуация, когда поток выполняется дольше, чем ожидалось, из-за неправильной настройки приоритетов",
+          "nextQuestion": "(game-over)incorrect-answer"
+        }
+      ]
     },
-    "fourth-question": {
+    {
+      "name": "fourth-question",
       "situation": "Следующий вопрос:",
       "text": "Что такое сервлет (servlet) в Java?",
-      "answers": {
-        "Это интерфейс для создания пользовательских GUI-компонентов": "(game-over)incorrect-answer",
-        "Это Java-классы, которые расширяют возможности сервера, способный обрабатывать запросы от клиентов": "fifth-question",
-        "Это специальный класс, который управляет вводом и выводом в Java приложениях": "(game-over)incorrect-answer"
-      }
+      "answers": [
+        {
+          "text": "Это интерфейс для создания пользовательских GUI-компонентов",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "Это Java-классы, которые расширяют возможности сервера, способный обрабатывать запросы от клиентов",
+          "nextQuestion": "fifth-question"
+        },
+        {
+          "text": "Это специальный класс, который управляет вводом и выводом в Java приложениях",
+          "nextQuestion": "(game-over)incorrect-answer"
+        }
+      ]
     },
-    "fifth-question": {
+    {
+      "name": "fifth-question",
       "situation": "Следующий вопрос:",
       "text": "Что такое жизненный цикл сервлета в Java?",
-      "answers": {
-        "Это последовательность состояний, через которые проходит сервлет от создания до уничтожения": "sixth-question",
-        "Это период времени, в течение которого сервлет активен и обрабатывает запросы": "(game-over)incorrect-answer",
-        "Это набор методов, которые вызываются при каждом HTTP-запросе к сервлету": "(game-over)incorrect-answer"
-      }
+      "answers": [
+        {
+          "text": "Это последовательность состояний, через которые проходит сервлет от создания до уничтожения",
+          "nextQuestion": "sixth-question"
+        },
+        {
+          "text": "Это период времени, в течение которого сервлет активен и обрабатывает запросы",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "Это набор методов, которые вызываются при каждом HTTP-запросе к сервлету",
+          "nextQuestion": "(game-over)incorrect-answer"
+        }
+      ]
     },
-    "sixth-question": {
+    {
+      "name": "sixth-question",
       "situation": "Следующий вопрос:",
       "text": "Что такое JSP (JavaServer Pages)?",
-      "answers": {
-        "Это сервер для хранения и управления Java-кодом": "(game-over)incorrect-answer",
-        "Это библиотека для работы с XML-документами в Java приложениях": "(game-over)incorrect-answer",
-        "Это технология, позволяющая создавать динамические веб-страницы с использованием Java": "seventh-question"
-      }
+      "answers": [
+        {
+          "text": "Это сервер для хранения и управления Java-кодом",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "Это библиотека для работы с XML-документами в Java приложениях",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "Это технология, позволяющая создавать динамические веб-страницы с использованием Java",
+          "nextQuestion": "seventh-question"
+        }
+      ]
     },
-    "seventh-question": {
+    {
+      "name": "seventh-question",
       "situation": "Следующий вопрос:",
       "text": "Какие основные методы жизненного цикла сервлета?",
-      "answers": {
-        "start(), execute(), stop()": "(game-over)incorrect-answer",
-        "init(), service(), destroy()": "eighth-question",
-        "begin(), process(), end()": "(game-over)incorrect-answer"
-      }
+      "answers": [
+        {
+          "text": "start(), execute(), stop()",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "init(), service(), destroy()",
+          "nextQuestion": "eighth-question"
+        },
+        {
+          "text": "begin(), process(), end()",
+          "nextQuestion": "(game-over)incorrect-answer"
+        }
+      ]
     },
-    "eighth-question": {
+    {
+      "name": "eighth-question",
       "situation": "Следующий вопрос:",
       "text": "Какие основные методы интерфейса Runnable в Java?",
-      "answers": {
-        "start(), stop(), resume()": "(game-over)incorrect-answer",
-        "run()": "(win)final-answer",
-        "execute(), yield(), wait()": "(game-over)incorrect-answer"
-      }
+      "answers": [
+        {
+          "text": "start(), stop(), resume()",
+          "nextQuestion": "(game-over)incorrect-answer"
+        },
+        {
+          "text": "run()",
+          "nextQuestion": "(win)final-answer"
+        },
+        {
+          "text": "execute(), yield(), wait()",
+          "nextQuestion": "(game-over)incorrect-answer"
+        }
+      ]
     },
-    "(win)final-answer": {
+    {
+      "name": "(win)final-answer",
       "situation": "Поздравляем!",
-      "text": "Вы прошли все вопросы успешно! Отличная работа!"
+      "text": "Вы прошли все вопросы успешно! Отличная работа!",
+      "answers": []
     }
-  }
+  ]
 }
