@@ -1,12 +1,16 @@
 package com.javarush.kotovych.entity;
 
+import com.javarush.kotovych.factory.SessionCreator;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,4 +33,5 @@ public class Question {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     private List<Answer> answers = new ArrayList<>();
+
 }

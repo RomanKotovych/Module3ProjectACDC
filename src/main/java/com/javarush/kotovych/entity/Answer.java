@@ -7,7 +7,8 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 @Table(name = "answer", schema = "public")
 public class Answer {

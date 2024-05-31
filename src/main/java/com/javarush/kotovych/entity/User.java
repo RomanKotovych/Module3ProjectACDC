@@ -2,6 +2,7 @@ package com.javarush.kotovych.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter

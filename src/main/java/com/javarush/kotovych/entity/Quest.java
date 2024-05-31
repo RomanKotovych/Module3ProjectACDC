@@ -1,13 +1,16 @@
 package com.javarush.kotovych.entity;
 
+import com.javarush.kotovych.factory.SessionCreator;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
