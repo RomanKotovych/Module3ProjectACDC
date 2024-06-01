@@ -2,6 +2,11 @@ package com.javarush.kotovych.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 
 @Entity
@@ -11,7 +16,8 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "answer", schema = "public")
-public class Answer {
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+public class Answer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

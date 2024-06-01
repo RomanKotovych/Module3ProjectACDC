@@ -1,12 +1,14 @@
 package com.javarush.kotovych.entity;
 
-import com.javarush.kotovych.factory.SessionCreator;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.Session;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.annotations.Cache;
 
 @Entity
 @Getter
@@ -15,7 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "quest", schema = "public")
-public class Quest {
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+public class Quest implements Serializable {
+
     @Column
     private String name;
 
@@ -26,7 +30,7 @@ public class Quest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "quest_id")
     private List<Question> questions = new ArrayList<>();
 

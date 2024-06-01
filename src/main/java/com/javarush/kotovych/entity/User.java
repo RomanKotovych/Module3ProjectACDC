@@ -2,7 +2,12 @@ package com.javarush.kotovych.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.stereotype.Service;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 
 @Getter
@@ -12,7 +17,9 @@ import lombok.experimental.SuperBuilder;
 @Builder
 @Entity
 @Table(name = "users", schema = "public")
-public class User {
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

@@ -10,17 +10,23 @@
         <property name="hibernate.connection.password">postgres</property>
 
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-
         <property name="hibernate.current_session_context_class">thread</property>
-
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-
         <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region.factory_class">jcache</property>
+        <property name="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</property>
+
 
         <mapping class="com.javarush.kotovych.entity.User"/>
         <mapping class="com.javarush.kotovych.entity.Quest"/>
         <mapping class="com.javarush.kotovych.entity.Question"/>
         <mapping class="com.javarush.kotovych.entity.Answer"/>
+
+
+
     </session-factory>
 </hibernate-configuration>
