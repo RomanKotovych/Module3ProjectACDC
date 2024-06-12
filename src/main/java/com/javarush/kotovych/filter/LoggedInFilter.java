@@ -1,6 +1,7 @@
 package com.javarush.kotovych.filter;
 
 
+import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
@@ -11,7 +12,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.servlet.*;
 
@@ -24,8 +24,7 @@ import java.util.Optional;
 @Slf4j
 public class LoggedInFilter implements Filter {
 
-    @Autowired
-    UserService userService;
+    UserService userService = NanoSpring.find(UserService.class);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

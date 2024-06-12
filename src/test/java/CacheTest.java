@@ -1,5 +1,5 @@
 import com.javarush.kotovych.entity.User;
-import com.javarush.kotovych.factory.SessionCreator;
+import com.javarush.kotovych.config.SessionCreator;
 import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 

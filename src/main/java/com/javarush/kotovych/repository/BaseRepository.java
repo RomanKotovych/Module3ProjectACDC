@@ -1,6 +1,6 @@
 package com.javarush.kotovych.repository;
 
-import com.javarush.kotovych.factory.SessionCreator;
+import com.javarush.kotovych.config.SessionCreator;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;

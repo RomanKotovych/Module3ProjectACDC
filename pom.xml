@@ -30,6 +30,8 @@
     </dependencyManagement>
 
 
+
+
     <dependencies>
 
         <dependency>
@@ -55,9 +57,15 @@
             <scope>provided</scope>
         </dependency>
 
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
         </dependency>
 
         <dependency>

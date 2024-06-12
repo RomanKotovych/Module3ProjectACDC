@@ -2,13 +2,15 @@ package com.javarush.kotovych.service;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.Quest;
-import com.javarush.kotovych.factory.SessionCreator;
+import com.javarush.kotovych.config.SessionCreator;
 import com.javarush.kotovych.repository.QuestRepository;
+import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class QuestService extends QuestRepository {
 
     public QuestService() {

@@ -2,8 +2,9 @@ package com.javarush.kotovych.service;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.User;
-import com.javarush.kotovych.factory.SessionCreator;
+import com.javarush.kotovych.config.SessionCreator;
 import com.javarush.kotovych.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@Transactional
 public class UserService extends UserRepository {
 
 
