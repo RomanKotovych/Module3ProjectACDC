@@ -20,6 +20,7 @@ public class SignUpController {
 
     private final UserService userService = NanoSpring.find(UserService.class);
 
+
     @GetMapping(UriConstants.SIGNUP_URI)
     public ModelAndView getSignupPage() {
         return new ModelAndView(Constants.SIGNUP);
@@ -30,7 +31,7 @@ public class SignUpController {
                                @RequestParam(Constants.PASSWORD) String password,
                                HttpServletResponse response) {
 
-        User userToCheck = userService.getIfExists(username);
+        User userToCheck = userService.getIfExistsByUsername(username);
 
         if (userToCheck == null) {
             User user = new User(username, password);

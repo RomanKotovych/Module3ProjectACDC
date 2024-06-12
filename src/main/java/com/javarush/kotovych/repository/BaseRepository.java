@@ -1,74 +1,56 @@
 package com.javarush.kotovych.repository;
 
 import com.javarush.kotovych.config.SessionCreator;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.Collection;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public abstract class BaseRepository<T> implements Repository<T> {
 
     private final Class<T> entityClass;
 
-    public BaseRepository(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
-
     @Override
     public Collection<T> getAll() {
-        try (Session session = SessionCreator.createSession()) {
-            Query<T> query = session.createQuery("from %s".formatted(entityClass.getName()), entityClass);
-            return query.list();
-        }
-
+        Session session = SessionCreator.getSession();
+        Query<T> query = session.createQuery("from %s".formatted(entityClass.getName()), entityClass);
+        return query.list();
     }
 
     @Override
     public Optional<T> get(long id) {
-        try (Session session = SessionCreator.createSession()) {
-            T entity = session.find(entityClass, id);
-            return Optional.ofNullable(entity);
-        }
+        Session session = SessionCreator.getSession();
+        T entity = session.find(entityClass, id);
+        return Optional.ofNullable(entity);
     }
 
     @Override
     public void create(T entity) {
-        try (Session session = SessionCreator.createSession()) {
-            Transaction transaction = session.beginTransaction();
-            try {
-                session.persist(entity);
-                transaction.commit();
-            } catch (Exception e) {
-                transaction.rollback();
-            }
-        }
+        Session session = SessionCreator.getSession();
+        session.persist(entity);
     }
 
     @Override
     public void update(T entity) {
-        try (Session session = SessionCreator.createSession()) {
-            Transaction transaction = session.beginTransaction();
-            try {
-                session.merge(entity);
-                transaction.commit();
-            } catch (Exception e) {
-                transaction.rollback();
-            }
-        }
+        Session session = SessionCreator.getSession();
+        session.merge(entity);
     }
+
 
     @Override
     public void delete(T entity) {
-        try (Session session = SessionCreator.createSession()) {
-            Transaction transaction = session.beginTransaction();
-            try {
-                session.remove(entity);
-                transaction.commit();
-            } catch (Exception e) {
-                transaction.rollback();
-            }
-        }
+        Session session = SessionCreator.getSession();
+        session.remove(entity);
+    }
+
+    @Override
+    public T findByParameter(String parameterName, String value) {
+        Session session = SessionCreator.getSession();
+        Query<T> query = session.createQuery("select e from %s e where e.%s = :paramValue".formatted(entityClass.getName(), parameterName), entityClass);
+        query.setParameter("paramValue", value);
+        return query.uniqueResult();
     }
 }

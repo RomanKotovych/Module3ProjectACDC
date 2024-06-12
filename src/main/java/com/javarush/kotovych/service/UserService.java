@@ -10,11 +10,11 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @Slf4j
 @Transactional
 public class UserService extends UserRepository {
-
 
     public UserService() {
         super(User.class);
@@ -27,27 +27,21 @@ public class UserService extends UserRepository {
     }
 
 
-    public User getIfExists(long id) {
+    public User getIfExistsById(long id) {
         return get(id).orElse(new User());
     }
 
-    public User getIfExists(String username) {
-        try (Session session = SessionCreator.createSession()) {
-            Query<User> query = session.createQuery("from User where username = :username", User.class);
-            query.setParameter(Constants.USERNAME, username);
-
-            return query.uniqueResult();
-        }
+    public User getIfExistsByUsername(String username) {
+        return findByParameter("username", username);
     }
 
     public boolean checkIfCorrect(String username, String password) {
-        try (Session session = SessionCreator.createSession()) {
-            Query<User> query = session.createQuery("from User where username = :username and password = :password", User.class);
-            query.setParameter(Constants.USERNAME, username);
-            query.setParameter(Constants.PASSWORD, password);
+        Session session = SessionCreator.getSession();
+        Query<User> query = session.createQuery("from User where username = :username and password = :password", User.class);
+        query.setParameter(Constants.USERNAME, username);
+        query.setParameter(Constants.PASSWORD, password);
 
-            User user = query.uniqueResult();
-            return user != null;
-        }
+        User user = query.uniqueResult();
+        return user != null;
     }
 }

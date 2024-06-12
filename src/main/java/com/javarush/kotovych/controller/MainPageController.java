@@ -33,7 +33,7 @@ public class MainPageController {
 
         boolean exists = userService.checkIfExists(id);
         if (exists) {
-            User user = userService.getIfExists(id);
+            User user = userService.getIfExistsById(id);
             modelAndView.addObject(Constants.LOGGED_IN, true);
             modelAndView.addObject(Constants.USERNAME, user.getUsername());
         } else {

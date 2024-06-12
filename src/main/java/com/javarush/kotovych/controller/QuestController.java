@@ -30,7 +30,7 @@ public class QuestController {
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
         }
 
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExistsById(id);
         setStatistics(user, currentPart);
         SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
 

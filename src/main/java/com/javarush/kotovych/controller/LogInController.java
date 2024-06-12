@@ -21,6 +21,7 @@ public class LogInController {
 
     private final UserService userService = NanoSpring.find(UserService.class);
 
+
     @GetMapping(UriConstants.LOGIN_URI)
     public ModelAndView getLoginPage() {
         return new ModelAndView(Constants.LOGIN);
@@ -37,7 +38,7 @@ public class LogInController {
             log.info(LoggerConstants.USER_NOT_FOUND_LOG, username);
             return loginPage;
         }
-        User user = userService.getIfExists(username);
+        User user = userService.getIfExistsByUsername(username);
         if(user != null) {
             long id = user.getId();
             CookieSetter.addCookie(response, Constants.ID, String.valueOf(id));

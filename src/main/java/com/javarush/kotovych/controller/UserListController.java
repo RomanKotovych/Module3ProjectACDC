@@ -15,12 +15,13 @@ public class UserListController {
 
     private final UserService userService = NanoSpring.find(UserService.class);
 
+
     @GetMapping(UriConstants.USER_LIST_URI)
     public ModelAndView getUserListPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.USER_LIST);
         modelAndView.addObject(Constants.USERS, userService.getAll());
 
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExistsById(id);
 
         modelAndView.addObject(Constants.USERNAME, user.getUsername());
         return modelAndView;

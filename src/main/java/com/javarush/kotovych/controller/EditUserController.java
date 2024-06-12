@@ -16,10 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditUserController {
     private final UserService userService = NanoSpring.find(UserService.class);
 
+
     @GetMapping(UriConstants.EDIT_USER_URI)
     public ModelAndView getEditUserPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExistsById(id);
         log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
         modelAndView.addObject(Constants.USER, user);
         return modelAndView;
@@ -37,7 +38,7 @@ public class EditUserController {
             return editPage;
         }
 
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExistsById(id);
         user.setUsername(editUsername);
         user.setPassword(editPassword);
         userService.update(user);

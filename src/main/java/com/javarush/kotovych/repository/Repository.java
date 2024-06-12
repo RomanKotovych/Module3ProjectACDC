@@ -17,4 +17,5 @@ public interface Repository<T> {
 
     void delete(T entity);
 
+    T findByParameter(String parameterName, String value);
 }

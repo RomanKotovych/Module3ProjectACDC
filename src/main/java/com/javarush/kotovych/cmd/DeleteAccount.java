@@ -14,11 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @Controller
 public class DeleteAccount {
-    private final UserService userService = NanoSpring.find(UserService.class);
+    private final UserService userService;
+
+    public DeleteAccount(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
     public ModelAndView deleteAccount(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        userService.delete(userService.getIfExists(id));
+        userService.delete(userService.getIfExistsById(id));
         log.info(LoggerConstants.USER_ID_DELETED_LOG, id);
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }

@@ -25,7 +25,6 @@ import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
 
 @UtilityClass
 public class NanoSpring {
-
     private static final Map<Class<?>, Object> beans = new HashMap<>();
     public static final String CLASSES = File.separator + "classes" + File.separator;
     public static final String EXT = ".class";
@@ -162,12 +161,11 @@ public class NanoSpring {
                                        @Origin Method method,
                                        @AllArguments Object[] args,
                                        @SuperMethod Method superMethod) throws Throwable {
-            SessionCreator sessionCreator = find(SessionCreator.class);
-            sessionCreator.beginTransactional();
+            SessionCreator.beginTransactional();
             try {
                 return superMethod.invoke(self, args);
             } finally {
-                sessionCreator.endTransactional();
+                SessionCreator.endTransactional();
             }
         }
     }

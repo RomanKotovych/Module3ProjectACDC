@@ -22,6 +22,7 @@ public class QuestCreationController {
     private final QuestService questService = NanoSpring.find(QuestService.class);
     private final UserService userService = NanoSpring.find(UserService.class);
 
+
     @GetMapping(UriConstants.CREATE_QUEST_URI)
     public ModelAndView getCreateQuestPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         if (userService.checkIfExists(id)) {
@@ -33,7 +34,7 @@ public class QuestCreationController {
     @PostMapping(UriConstants.CREATE_QUEST_URI)
     public ModelAndView createQuest(@RequestParam(Constants.JSON) String json,
                                     @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExistsById(id);
         if (user != null) {
             String author = user.getUsername();
             Quest quest;

@@ -15,7 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class DeleteQuest {
 
-    private final QuestService questService = NanoSpring.find(QuestService.class);
+    private final QuestService questService;
+
+    public DeleteQuest(QuestService questService) {
+        this.questService = questService;
+    }
 
     @PostMapping(UriConstants.DELETE_QUEST_URI)
     public ModelAndView deleteQuest(@RequestParam(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {

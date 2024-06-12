@@ -18,12 +18,11 @@ public class QuestService extends QuestRepository {
     }
 
     public boolean checkIfExists(String name) {
-        try (Session session = SessionCreator.createSession()) {
-            Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
-            query.setParameter(Constants.NAME, name);
+        Session session = SessionCreator.getSession();
+        Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
+        query.setParameter(Constants.NAME, name);
 
-            return query.uniqueResult() != null;
-        }
+        return query.uniqueResult() != null;
     }
 
 
@@ -32,13 +31,12 @@ public class QuestService extends QuestRepository {
     }
 
     public Quest getIfExists(String name) {
-        try (Session session = SessionCreator.createSession()) {
-            Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
-            query.setParameter(Constants.NAME, name);
+        Session session = SessionCreator.getSession();
+        Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
+        query.setParameter(Constants.NAME, name);
 
-            Quest quest = query.uniqueResult();
-            return quest != null ? quest : new Quest();
-        }
+        Quest quest = query.uniqueResult();
+        return quest != null ? quest : new Quest();
     }
 
 }

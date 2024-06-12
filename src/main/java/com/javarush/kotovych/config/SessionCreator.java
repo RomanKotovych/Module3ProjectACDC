@@ -1,5 +1,6 @@
 package com.javarush.kotovych.config;
 
+import com.javarush.kotovych.exception.AppException;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -21,7 +22,7 @@ public class SessionCreator {
                 .buildSessionFactory();
     }
 
-    public static Session createSession() {
+    public static Session getSession() {
         return sessionBox.get() == null || !sessionBox.get().isOpen()
                 ? sessionFactory.openSession()
                 : sessionBox.get();
@@ -33,23 +34,21 @@ public class SessionCreator {
         }
         AtomicInteger level = levelBox.get ();
         if (level.getAndIncrement() == 0) {
-            Session session = createSession();
+            Session session = getSession();
             sessionBox.set(session);
             session.beginTransaction();
-            log.info("begin level: {}", level.get());
         }
     }
 
     public static void endTransactional() {
-        AtomicInteger level = levelBox.get ();
-        Session session = sessionBox.get ();
-        log.info("end level: {}", level.get());
+        AtomicInteger level = levelBox.get();
+        Session session = sessionBox.get();
         if (level.decrementAndGet () == 0) {
             try {
                 session.getTransaction().commit();
             } catch (RuntimeException e) {
                 session.getTransaction().rollback();
-                throw e;
+                throw new AppException(e);
             }
         }
     }

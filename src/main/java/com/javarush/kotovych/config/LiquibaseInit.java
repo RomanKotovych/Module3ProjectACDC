@@ -4,7 +4,6 @@ import liquibase.Scope;
 import liquibase.command.CommandScope;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
-import java.sql.DriverManager;
 
 public class LiquibaseInit {
     public static void main(String[] args) throws Exception {
