@@ -1,5 +1,9 @@
 package com.javarush.kotovych.config;
 
+import com.javarush.kotovych.entity.Answer;
+import com.javarush.kotovych.entity.Quest;
+import com.javarush.kotovych.entity.Question;
+import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.exception.AppException;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +19,16 @@ public class SessionCreator {
     private static final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
     private static final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
 
+    private static final ApplicationProperties applicationProperties = NanoSpring.find(ApplicationProperties.class);
 
     static {
+        LiquibaseInit.init();
         sessionFactory = new Configuration()
-                .configure()
+                .addProperties(applicationProperties)
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Quest.class)
+                .addAnnotatedClass(Question.class)
+                .addAnnotatedClass(Answer.class)
                 .buildSessionFactory();
     }
 

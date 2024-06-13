@@ -51,6 +51,9 @@ public class QuestService extends QuestRepository {
         query.setParameter(Constants.NAME, name);
 
         Long questId = query.uniqueResult();
+        if(questId == null){
+            return null;
+        }
         return getIfExists(questId);
     }
 

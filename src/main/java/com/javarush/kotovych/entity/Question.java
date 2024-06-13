@@ -13,7 +13,6 @@ import org.hibernate.annotations.Cache;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,9 +20,12 @@ import org.hibernate.annotations.Cache;
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Question implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 3L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private String name;

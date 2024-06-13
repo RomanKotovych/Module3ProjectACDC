@@ -1,7 +1,6 @@
 {
   "name": "Java Test",
   "description": "Разные вопросы про Java",
-  "author": "default",
   "questions": [
     {
       "name": "start",

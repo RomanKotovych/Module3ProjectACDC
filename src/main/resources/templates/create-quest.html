@@ -50,74 +50,174 @@
 
     document.getElementById('copy-text').addEventListener('click', function () {
         var textToCopy = "{\n" +
-            "  \"name\": \"Java 2\",\n" +
-            "  \"description\": \"Удивительный мир магии 2\",\n" +
-            "  \"questions\": {\n" +
-            "    \"start\": {\n" +
-            "      \"situation\": \"Вы пишите проект и столкнулись с ошибкой\",\n" +
-            "      \"text\": \"Что будете делать?\",\n" +
-            "      \"answers\": {\n" +
-            "        \"Спросить ChatGPT\": \"(game-over)ask-chat-gpt\",\n" +
-            "        \"Попробовать решить\": \"try-fixing\"\n" +
-            "      }\n" +
+            "  \"name\": \"Java Test\",\n" +
+            "  \"description\": \"Разные вопросы про Java\",\n" +
+            "  \"questions\": [\n" +
+            "    {\n" +
+            "      \"name\": \"start\",\n" +
+            "      \"situation\": \"Первый вопрос\",\n" +
+            "      \"text\": \"Что такое многопоточность (multithreading) в Java?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"Это возможность выполнения нескольких потоков в одном приложении для повышения производительности\",\n" +
+            "          \"nextQuestion\": \"next-question\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это методика оптимизации работы с памятью\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это процесс создания нескольких экземпляров одного класса\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"(game-over)ask-chat-gpt\": {\n" +
-            "      \"situation\": \"Ваш проект сломался\",\n" +
-            "      \"text\": \"Вы сделали так как сказал ChatGPT но забыли сделать коммит\"\n" +
+            "    {\n" +
+            "      \"name\": \"(game-over)incorrect-answer\",\n" +
+            "      \"situation\": \"Вы дали неверный ответ.\",\n" +
+            "      \"text\": \"К сожалению, это неправильный ответ. Спасибо за участие. Попробуйте еще раз!\",\n" +
+            "      \"answers\": []\n" +
             "    },\n" +
-            "    \"try-fixing\": {\n" +
-            "      \"situation\": \"У вас получилось починить ошибку\",\n" +
-            "      \"text\": \"Что будете делать дальше?\",\n" +
-            "      \"answers\": {\n" +
-            "        \"Добавить новую функцию\": \"add-new-function\",\n" +
-            "        \"Доработать старую\": \"make-old-function-better\"\n" +
-            "      }\n" +
+            "    {\n" +
+            "      \"name\": \"next-question\",\n" +
+            "      \"situation\": \"Следующий вопрос:\",\n" +
+            "      \"text\": \"Что такое синхронизация (synchronization) в многопоточных приложениях?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"Это методика определения порядка выполнения потоков\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это процесс слияния нескольких потоков в один для ускорения работы программы\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это механизм, который предотвращает одновременный доступ нескольких потоков к общим данным\",\n" +
+            "          \"nextQuestion\": \"third-question\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"add-new-function\": {\n" +
-            "      \"situation\": \"Вы добавили новую функцию\",\n" +
-            "      \"text\": \"У вас километровый stack trace\",\n" +
-            "      \"answers\": {\n" +
-            "        \"Запустить опять\": \"start-code-again\",\n" +
-            "        \"Удалить новую функцию\": \"(game-over)delete-new-function\"\n" +
-            "      }\n" +
+            "    {\n" +
+            "      \"name\": \"third-question\",\n" +
+            "      \"situation\": \"Следующий вопрос:\",\n" +
+            "      \"text\": \"Что такое deadlock в многопоточных приложениях?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"Это ситуация, когда поток зависает пытаясь выполнить код с ошибками\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"это ситуация, когда два или более потоков блокируются, ожидая друг друга, чтобы освободить занятые ими ресурсы\",\n" +
+            "          \"nextQuestion\": \"fourth-question\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это ситуация, когда поток выполняется дольше, чем ожидалось, из-за неправильной настройки приоритетов\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"make-old-function-better\": {\n" +
-            "      \"situation\": \"Вы доработали старую функцию\",\n" +
-            "      \"text\": \"Ваш код стал быстрее\",\n" +
-            "      \"answers\": {\n" +
-            "        \"Сделать pull request\": \"(game-over)make-pr\",\n" +
-            "        \"Добавить что-то новое\": \"(game-over)add-something-new\"\n" +
-            "      }\n" +
+            "    {\n" +
+            "      \"name\": \"fourth-question\",\n" +
+            "      \"situation\": \"Следующий вопрос:\",\n" +
+            "      \"text\": \"Что такое сервлет (servlet) в Java?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"Это интерфейс для создания пользовательских GUI-компонентов\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это Java-классы, которые расширяют возможности сервера, способный обрабатывать запросы от клиентов\",\n" +
+            "          \"nextQuestion\": \"fifth-question\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это специальный класс, который управляет вводом и выводом в Java приложениях\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"start-code-again\": {\n" +
-            "      \"situation\": \"Код запустился\",\n" +
-            "      \"text\": \"JVM стало вас жалко и она запустила код без ошибок\",\n" +
-            "      \"answers\": {\n" +
-            "        \"Сделать pull request\": \"(win)pull-request-plus-new-functions\",\n" +
-            "        \"Закрыть проект\": \"(game-over)jvm-is-mad\"\n" +
-            "      }\n" +
+            "    {\n" +
+            "      \"name\": \"fifth-question\",\n" +
+            "      \"situation\": \"Следующий вопрос:\",\n" +
+            "      \"text\": \"Что такое жизненный цикл сервлета в Java?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"Это последовательность состояний, через которые проходит сервлет от создания до уничтожения\",\n" +
+            "          \"nextQuestion\": \"sixth-question\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это период времени, в течение которого сервлет активен и обрабатывает запросы\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это набор методов, которые вызываются при каждом HTTP-запросе к сервлету\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"(game-over)make-pr\": {\n" +
-            "      \"situation\": \"Вы не добавили ничего нового\",\n" +
-            "      \"text\": \"Поражение\"\n" +
+            "    {\n" +
+            "      \"name\": \"sixth-question\",\n" +
+            "      \"situation\": \"Следующий вопрос:\",\n" +
+            "      \"text\": \"Что такое JSP (JavaServer Pages)?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"Это сервер для хранения и управления Java-кодом\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это библиотека для работы с XML-документами в Java приложениях\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"Это технология, позволяющая создавать динамические веб-страницы с использованием Java\",\n" +
+            "          \"nextQuestion\": \"seventh-question\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"(game-over)add-something-new\" : {\n" +
-            "      \"situation\": \"Вы устали и запутались в коде\",\n" +
-            "      \"text\": \"Поражение\"\n" +
+            "    {\n" +
+            "      \"name\": \"seventh-question\",\n" +
+            "      \"situation\": \"Следующий вопрос:\",\n" +
+            "      \"text\": \"Какие основные методы жизненного цикла сервлета?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"start(), execute(), stop()\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"init(), service(), destroy()\",\n" +
+            "          \"nextQuestion\": \"eighth-question\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"begin(), process(), end()\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"(win)pull-request-plus-new-functions\": {\n" +
-            "      \"situation\": \"Вы добавили что-то новое и сделали pull request\",\n" +
-            "      \"text\": \"Победа\"\n" +
+            "    {\n" +
+            "      \"name\": \"eighth-question\",\n" +
+            "      \"situation\": \"Следующий вопрос:\",\n" +
+            "      \"text\": \"Какие основные методы интерфейса Runnable в Java?\",\n" +
+            "      \"answers\": [\n" +
+            "        {\n" +
+            "          \"text\": \"start(), stop(), resume()\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"run()\",\n" +
+            "          \"nextQuestion\": \"(win)final-answer\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"text\": \"execute(), yield(), wait()\",\n" +
+            "          \"nextQuestion\": \"(game-over)incorrect-answer\"\n" +
+            "        }\n" +
+            "      ]\n" +
             "    },\n" +
-            "    \"(game-over)jvm-is-mad\": {\n" +
-            "      \"situation\": \"JVM не понравилась такая наглость\",\n" +
-            "      \"text\": \"Поражение\"\n" +
-            "    },\n" +
-            "    \"(game-over)delete-new-function\": {\n" +
-            "      \"situation\": \"Вы не добавили ничего нового\",\n" +
-            "      \"text\": \"Поражение\"\n" +
+            "    {\n" +
+            "      \"name\": \"(win)final-answer\",\n" +
+            "      \"situation\": \"Поздравляем!\",\n" +
+            "      \"text\": \"Вы прошли все вопросы успешно! Отличная работа!\",\n" +
+            "      \"answers\": []\n" +
             "    }\n" +
-            "  }\n" +
+            "  ]\n" +
             "}\n"
         var textArea = document.createElement("textarea");
         textArea.value = textToCopy;

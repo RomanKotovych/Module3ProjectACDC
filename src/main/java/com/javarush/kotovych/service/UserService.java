@@ -28,7 +28,7 @@ public class UserService extends UserRepository {
 
 
     public User getIfExists(long id) {
-        return get(id).orElse(new User());
+        return get(id).orElse(null);
     }
 
     public User getIfExists(String username) {
@@ -37,6 +37,9 @@ public class UserService extends UserRepository {
         query.setParameter(Constants.USERNAME, username);
 
         Long userId = query.uniqueResult();
+        if(userId == null){
+            return null;
+        }
         return getIfExists(userId);
     }
 
