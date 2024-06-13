@@ -26,7 +26,7 @@ public class Quest implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column
     private String name;
@@ -40,5 +40,5 @@ public class Quest implements Serializable {
     private List<Question> questions = new ArrayList<>();
 
     @Column
-    private String author;
+    private long author;
 }

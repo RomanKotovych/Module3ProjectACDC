@@ -48,11 +48,4 @@ public abstract class BaseRepository<T> implements Repository<T> {
         session.remove(entity);
     }
 
-    @Override
-    public T findByParameter(String parameterName, String value) {
-        Session session = SessionCreator.getSession();
-        Query<T> query = session.createQuery("select e from %s e where e.%s = :paramValue".formatted(entityClass.getName(), parameterName), entityClass);
-        query.setParameter("paramValue", value);
-        return query.uniqueResult();
-    }
 }

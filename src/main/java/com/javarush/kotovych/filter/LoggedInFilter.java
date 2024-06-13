@@ -2,6 +2,7 @@ package com.javarush.kotovych.filter;
 
 
 import com.javarush.kotovych.config.NanoSpring;
+import com.javarush.kotovych.config.SessionCreator;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
@@ -51,6 +52,8 @@ public class LoggedInFilter implements Filter {
                 return;
             }
         }
+        SessionCreator.beginTransactional();
         filterChain.doFilter(servletRequest, servletResponse);
+        SessionCreator.endTransactional();
     }
 }
