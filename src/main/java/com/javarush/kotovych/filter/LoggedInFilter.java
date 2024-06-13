@@ -24,11 +24,7 @@ import java.util.Optional;
 @Slf4j
 public class LoggedInFilter implements Filter {
 
-    private final UserService userService;
-
-    public LoggedInFilter(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService = NanoSpring.find(UserService.class);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

@@ -1,6 +1,7 @@
 package com.javarush.kotovych.repository;
 
 import com.javarush.kotovych.config.SessionCreator;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Transactional
 public abstract class BaseRepository<T> implements Repository<T> {
 
     private final Class<T> entityClass;
