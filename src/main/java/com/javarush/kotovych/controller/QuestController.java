@@ -84,8 +84,8 @@ public class QuestController {
                                     User user,
                                     String currentPart) {
         Question question = quest.getQuestions().stream()
-                        .filter(o -> o.getName().equals(currentPart))
-                        .findFirst().orElse(null);
+                .filter(o -> o.getName().equals(currentPart))
+                .findFirst().orElse(null);
 
         modelAndView.addObject(Constants.QUEST, quest);
         modelAndView.addObject(Constants.QUESTION, question);

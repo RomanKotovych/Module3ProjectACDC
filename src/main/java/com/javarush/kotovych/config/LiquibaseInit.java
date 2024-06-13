@@ -14,7 +14,7 @@ public class LiquibaseInit {
             CommandScope update = new CommandScope("update");
 
             update.addArgumentValue(ConnectionConstants.CHANGELOG_FILE, ConnectionConstants.CHANGELOG_FILE_LOCATION);
-            update.addArgumentValue (ConnectionConstants.URL, ConnectionConstants.POSTGRES_URL);
+            update.addArgumentValue(ConnectionConstants.URL, ConnectionConstants.POSTGRES_URL);
             update.addArgumentValue(Constants.USERNAME, ConnectionConstants.POSTGRES_USERNAME);
             update.addArgumentValue(Constants.PASSWORD, ConnectionConstants.POSTGRES_PASSWORD);
             update.execute();

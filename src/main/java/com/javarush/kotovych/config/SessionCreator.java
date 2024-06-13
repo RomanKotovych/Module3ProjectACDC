@@ -29,10 +29,10 @@ public class SessionCreator {
     }
 
     public static void beginTransactional() {
-        if (levelBox.get () == null) {
+        if (levelBox.get() == null) {
             levelBox.set(new AtomicInteger(0));
         }
-        AtomicInteger level = levelBox.get ();
+        AtomicInteger level = levelBox.get();
         if (level.getAndIncrement() == 0) {
             Session session = getSession();
             sessionBox.set(session);
@@ -43,7 +43,7 @@ public class SessionCreator {
     public static void endTransactional() {
         AtomicInteger level = levelBox.get();
         Session session = sessionBox.get();
-        if (level.decrementAndGet () == 0) {
+        if (level.decrementAndGet() == 0) {
             try {
                 session.getTransaction().commit();
             } catch (RuntimeException e) {
