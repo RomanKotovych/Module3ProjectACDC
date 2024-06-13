@@ -23,7 +23,7 @@ import java.util.Optional;
 @Component
 @WebFilter(urlPatterns = UriConstants.ALL_URIS)
 @Slf4j
-public class LoggedInFilter implements Filter {
+public class LoggedInAndTransactionalFilter implements Filter {
 
     private final UserService userService = NanoSpring.find(UserService.class);
 
@@ -52,8 +52,12 @@ public class LoggedInFilter implements Filter {
                 return;
             }
         }
-        SessionCreator.beginTransactional();
+        if(FilterUrlChecker.isTransactional(uri)){
+            SessionCreator.beginTransactional();
+            filterChain.doFilter(servletRequest, servletResponse);
+            SessionCreator.endTransactional();
+            return;
+        }
         filterChain.doFilter(servletRequest, servletResponse);
-        SessionCreator.endTransactional();
     }
 }

@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="1718254158925-1" author="roman (generated)">
+    <changeSet id="1718311702408-1" author="roman (generated)">
         <createTable tableName="answer">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_answer"/>
@@ -15,7 +15,7 @@
             <column name="question_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1718254158925-2" author="roman (generated)">
+    <changeSet id="1718311702408-2" author="roman (generated)">
         <createTable tableName="quest">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_quest"/>
@@ -25,7 +25,7 @@
             <column name="author" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1718254158925-3" author="roman (generated)">
+    <changeSet id="1718311702408-3" author="roman (generated)">
         <createTable tableName="question">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_question"/>
@@ -36,7 +36,7 @@
             <column name="quest_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1718254158925-4" author="roman (generated)">
+    <changeSet id="1718311702408-4" author="roman (generated)">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users"/>
@@ -45,6 +45,7 @@
             <column name="password" type="VARCHAR(255)"/>
             <column name="wins" type="INT"/>
             <column name="losses" type="INT"/>
+            <column name="last_updated" type="DATETIME"/>
         </createTable>
     </changeSet>
 

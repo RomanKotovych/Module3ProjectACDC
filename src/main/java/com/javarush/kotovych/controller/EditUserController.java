@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.Instant;
+
 @Slf4j
 @Controller
 public class EditUserController {
@@ -39,11 +41,17 @@ public class EditUserController {
         }
 
         User user = userService.getIfExists(id);
-        user.setUsername(editUsername);
-        user.setPassword(editPassword);
-        userService.update(user);
-        log.info(LoggerConstants.ACCOUNT_UPDATED_LOG, id);
-
-        return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+        if (user.getLastUpdated() == null || System.currentTimeMillis() - user.getLastUpdated().getEpochSecond() * 1000 > Constants.EDITING_WAITING_TIME) {
+            user.setUsername(editUsername);
+            user.setPassword(editPassword);
+            user.setLastUpdated(Instant.now());
+            userService.update(user);
+            log.info(LoggerConstants.ACCOUNT_UPDATED_LOG, id);
+            return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+        } else {
+            ModelAndView modelAndView = new ModelAndView(UriConstants.EDIT_USER_REDIRECT);
+            modelAndView.addObject(Constants.ERROR, Constants.YOU_CAN_ONLY_EDIT_ACCOUNT_ONCE_IN_10_MINUTES);
+            return modelAndView;
+        }
     }
 }

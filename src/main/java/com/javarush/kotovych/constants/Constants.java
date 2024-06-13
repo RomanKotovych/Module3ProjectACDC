@@ -49,4 +49,7 @@ public class Constants {
     public static final String FAILED_TO_CREATE_QUEST = "failed to create quest";
 
     public static final List<String> NOT_FILTER_URLS = List.of("/", "/signup", "/login", "/css/", "/images/", "/js/");
+
+    public static final long EDITING_WAITING_TIME = 600000;
+    public static final String YOU_CAN_ONLY_EDIT_ACCOUNT_ONCE_IN_10_MINUTES = "you can only edit account once in 10 minutes";
 }

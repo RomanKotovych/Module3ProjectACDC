@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 
 @Getter
@@ -37,6 +39,10 @@ public class User implements Serializable {
 
     @Column
     private int losses;
+
+
+    @Column(name = "last_updated")
+    private Instant lastUpdated;
 
     public User(String username, String password) {
         this.username = username;
