@@ -20,7 +20,7 @@ public class EditUserController {
     @GetMapping(UriConstants.EDIT_USER_URI)
     public ModelAndView getEditUserPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
-        User user = userService.getIfExistsById(id);
+        User user = userService.getIfExists(id);
         log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
         modelAndView.addObject(Constants.USER, user);
         return modelAndView;
@@ -38,7 +38,7 @@ public class EditUserController {
             return editPage;
         }
 
-        User user = userService.getIfExistsById(id);
+        User user = userService.getIfExists(id);
         user.setUsername(editUsername);
         user.setPassword(editPassword);
         userService.update(user);

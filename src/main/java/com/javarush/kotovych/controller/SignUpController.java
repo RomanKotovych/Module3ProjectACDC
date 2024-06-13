@@ -31,7 +31,7 @@ public class SignUpController {
                                @RequestParam(Constants.PASSWORD) String password,
                                HttpServletResponse response) {
 
-        User userToCheck = userService.getIfExistsByUsername(username);
+        User userToCheck = userService.getIfExists(username);
 
         if (userToCheck == null) {
             User user = new User(username, password);

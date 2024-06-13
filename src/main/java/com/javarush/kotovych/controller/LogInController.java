@@ -38,7 +38,7 @@ public class LogInController {
             log.info(LoggerConstants.USER_NOT_FOUND_LOG, username);
             return loginPage;
         }
-        User user = userService.getIfExistsByUsername(username);
+        User user = userService.getIfExists(username);
         if(user != null) {
             long id = user.getId();
             CookieSetter.addCookie(response, Constants.ID, String.valueOf(id));

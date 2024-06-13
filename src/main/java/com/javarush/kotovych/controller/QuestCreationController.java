@@ -34,9 +34,9 @@ public class QuestCreationController {
     @PostMapping(UriConstants.CREATE_QUEST_URI)
     public ModelAndView createQuest(@RequestParam(Constants.JSON) String json,
                                     @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        User user = userService.getIfExistsById(id);
+        User user = userService.getIfExists(id);
         if (user != null) {
-            String author = user.getUsername();
+            long author = user.getId();
             Quest quest;
             try {
                 quest = QuestParser.parseFromJson(json);

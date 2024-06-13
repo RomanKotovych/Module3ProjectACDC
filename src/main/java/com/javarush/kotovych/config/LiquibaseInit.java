@@ -7,7 +7,6 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 
 public class LiquibaseInit {
     public static void main(String[] args) throws Exception {
-        System.out.println("Running Liquibase...");
         Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
             CommandScope update = new CommandScope("update");
 
@@ -17,7 +16,6 @@ public class LiquibaseInit {
             update.addArgumentValue("password", "postgres");
             update.execute();
         });
-        System.out.println("Running Liquibase...DONE");
 
     }
 }

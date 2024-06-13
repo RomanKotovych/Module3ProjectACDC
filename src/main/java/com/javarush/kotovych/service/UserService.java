@@ -27,12 +27,17 @@ public class UserService extends UserRepository {
     }
 
 
-    public User getIfExistsById(long id) {
+    public User getIfExists(long id) {
         return get(id).orElse(new User());
     }
 
-    public User getIfExistsByUsername(String username) {
-        return findByParameter("username", username);
+    public User getIfExists(String username) {
+        Session session = SessionCreator.getSession();
+        Query<Long> query = session.createQuery("select u.id from User u where u.username = :username", Long.class);
+        query.setParameter(Constants.USERNAME, username);
+
+        Long userId = query.uniqueResult();
+        return getIfExists(userId);
     }
 
     public boolean checkIfCorrect(String username, String password) {

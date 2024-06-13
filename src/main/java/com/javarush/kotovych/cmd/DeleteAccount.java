@@ -1,6 +1,5 @@
 package com.javarush.kotovych.cmd;
 
-import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
@@ -22,7 +21,7 @@ public class DeleteAccount {
 
     @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
     public ModelAndView deleteAccount(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        userService.delete(userService.getIfExistsById(id));
+        userService.delete(userService.getIfExists(id));
         log.info(LoggerConstants.USER_ID_DELETED_LOG, id);
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }

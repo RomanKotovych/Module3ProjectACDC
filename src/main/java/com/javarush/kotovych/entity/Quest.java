@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,5 +34,5 @@ public class Quest implements Serializable {
     private List<Question> questions = new ArrayList<>();
 
     @Column
-    private String author;
+    private long author;
 }

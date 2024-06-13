@@ -30,7 +30,7 @@ public class QuestController {
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
         }
 
-        User user = userService.getIfExistsById(id);
+        User user = userService.getIfExists(id);
         setStatistics(user, currentPart);
         SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
 
@@ -89,6 +89,6 @@ public class QuestController {
 
         modelAndView.addObject(Constants.QUEST, quest);
         modelAndView.addObject(Constants.QUESTION, question);
-        modelAndView.addObject(Constants.AUTHOR, user.getUsername().equals(quest.getAuthor()));
+        modelAndView.addObject(Constants.AUTHOR, user.getId() == quest.getAuthor());
     }
 }

@@ -21,7 +21,7 @@ public class UserListController {
         ModelAndView modelAndView = new ModelAndView(Constants.USER_LIST);
         modelAndView.addObject(Constants.USERS, userService.getAll());
 
-        User user = userService.getIfExistsById(id);
+        User user = userService.getIfExists(id);
 
         modelAndView.addObject(Constants.USERNAME, user.getUsername());
         return modelAndView;
