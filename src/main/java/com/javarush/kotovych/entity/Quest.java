@@ -40,5 +40,5 @@ public class Quest implements Serializable {
     private List<Question> questions = new ArrayList<>();
 
     @Column
-    private long author;
+    private String author;
 }

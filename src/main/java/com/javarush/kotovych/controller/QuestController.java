@@ -89,6 +89,6 @@ public class QuestController {
 
         modelAndView.addObject(Constants.QUEST, quest);
         modelAndView.addObject(Constants.QUESTION, question);
-        modelAndView.addObject(Constants.AUTHOR, user.getId() == quest.getAuthor());
+        modelAndView.addObject(Constants.AUTHOR, user.getUsername().equals(quest.getAuthor()));
     }
 }

@@ -36,7 +36,7 @@ public class QuestCreationController {
                                     @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
         User user = userService.getIfExists(id);
         if (user != null) {
-            long author = user.getId();
+            String author = user.getUsername();
             Quest quest;
             try {
                 quest = QuestParser.parseFromJson(json);
