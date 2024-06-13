@@ -33,12 +33,14 @@ public abstract class BaseRepository<T> implements Repository<T> {
     public void create(T entity) {
         Session session = SessionCreator.getSession();
         session.persist(entity);
+        session.flush();
     }
 
     @Override
     public void update(T entity) {
         Session session = SessionCreator.getSession();
         session.merge(entity);
+        session.flush();
     }
 
 
@@ -46,6 +48,7 @@ public abstract class BaseRepository<T> implements Repository<T> {
     public void delete(T entity) {
         Session session = SessionCreator.getSession();
         session.remove(entity);
+        session.flush();
     }
 
 }
