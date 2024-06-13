@@ -15,13 +15,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 public class SessionCreator {
-    private static final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
     private static final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
     private static final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
 
     private static final ApplicationProperties applicationProperties = NanoSpring.find(ApplicationProperties.class);
 
-    static {
+    public SessionCreator() {
         LiquibaseInit.init();
         sessionFactory = new Configuration()
                 .addProperties(applicationProperties)
@@ -32,13 +32,13 @@ public class SessionCreator {
                 .buildSessionFactory();
     }
 
-    public static Session getSession() {
+    public Session getSession() {
         return sessionBox.get() == null || !sessionBox.get().isOpen()
                 ? sessionFactory.openSession()
                 : sessionBox.get();
     }
 
-    public static void beginTransactional() {
+    public void beginTransactional() {
         if (levelBox.get() == null) {
             levelBox.set(new AtomicInteger(0));
         }

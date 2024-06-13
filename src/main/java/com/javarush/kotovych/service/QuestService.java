@@ -2,6 +2,7 @@ package com.javarush.kotovych.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.config.RedisConfig;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.Quest;
@@ -18,6 +19,7 @@ import java.io.IOException;
 @Service
 @Transactional
 public class QuestService extends QuestRepository {
+    private final SessionCreator sessionCreator = NanoSpring.find(SessionCreator.class);
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -26,7 +28,7 @@ public class QuestService extends QuestRepository {
     }
 
     public boolean checkIfExists(String name) {
-        Session session = SessionCreator.getSession();
+        Session session = sessionCreator.getSession();
         Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
         query.setParameter(Constants.NAME, name);
 
@@ -46,7 +48,7 @@ public class QuestService extends QuestRepository {
     }
 
     public Quest getIfExists(String name) {
-        Session session = SessionCreator.getSession();
+        Session session = sessionCreator.getSession();
         Query<Long> query = session.createQuery("select e.id from Quest e where name = :name", Long.class);
         query.setParameter(Constants.NAME, name);
 

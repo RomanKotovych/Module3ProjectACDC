@@ -161,7 +161,8 @@ public class NanoSpring {
                                        @Origin Method method,
                                        @AllArguments Object[] args,
                                        @SuperMethod Method superMethod) throws Throwable {
-            SessionCreator.beginTransactional();
+            SessionCreator sessionCreator = find(SessionCreator.class);
+            sessionCreator.beginTransactional();
             try {
                 return superMethod.invoke(self, args);
             } finally {

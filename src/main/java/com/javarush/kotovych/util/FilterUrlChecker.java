@@ -11,8 +11,4 @@ public class FilterUrlChecker {
                 .noneMatch(url::startsWith);
     }
 
-    public static boolean isTransactional(String url){
-        return UriConstants.TRANSACTION_URIS.stream()
-                .anyMatch(url::startsWith);
-    }
 }

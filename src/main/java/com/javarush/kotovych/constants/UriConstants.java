@@ -20,10 +20,4 @@ public class UriConstants {
     public static final String DELETE_QUEST_URI = "/delete-quest";
     public static final String ALL_URIS = "/*";
     public static final String EDIT_USER_REDIRECT = "redirect:/" + Constants.EDIT_USER;
-
-    public static final List<String> TRANSACTION_URIS = List.of(CREATE_QUEST_URI,
-            DELETE_QUEST_URI,
-            EDIT_USER_URI,
-            SIGNUP_URI,
-            DELETE_ACCOUNT_URI);
 }

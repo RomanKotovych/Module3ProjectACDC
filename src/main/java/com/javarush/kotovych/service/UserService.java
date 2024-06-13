@@ -1,5 +1,6 @@
 package com.javarush.kotovych.service;
 
+import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.config.SessionCreator;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Transactional
 public class UserService extends UserRepository {
+    private final SessionCreator sessionCreator = NanoSpring.find(SessionCreator.class);
 
     public UserService() {
         super(User.class);
@@ -31,7 +33,7 @@ public class UserService extends UserRepository {
     }
 
     public User getIfExists(String username) {
-        Session session = SessionCreator.getSession();
+        Session session = sessionCreator.getSession();
         Query<Long> query = session.createQuery("select u.id from User u where u.username = :username", Long.class);
         query.setParameter(Constants.USERNAME, username);
 
@@ -43,7 +45,7 @@ public class UserService extends UserRepository {
     }
 
     public boolean checkIfCorrect(String username, String password) {
-        Session session = SessionCreator.getSession();
+        Session session = sessionCreator.getSession();
         Query<User> query = session.createQuery("from User where username = :username and password = :password", User.class);
         query.setParameter(Constants.USERNAME, username);
         query.setParameter(Constants.PASSWORD, password);
