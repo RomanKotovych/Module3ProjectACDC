@@ -28,6 +28,6 @@ public class Answer implements Serializable {
     @Column
     private String text;
 
-    @Column
+    @Column(name = "next_question")
     private String nextQuestion;
 }
