@@ -1,5 +1,6 @@
 package com.javarush.kotovych.config;
 
+import com.javarush.kotovych.constants.ConnectionConstants;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
@@ -10,7 +11,7 @@ public class RedisConfig {
     private static final StatefulRedisConnection<String, String> connection;
 
     static {
-        redisClient = RedisClient.create("redis://localhost:6379");
+        redisClient = RedisClient.create(ConnectionConstants.REDIS_URL);
         connection = redisClient.connect();
     }
 
