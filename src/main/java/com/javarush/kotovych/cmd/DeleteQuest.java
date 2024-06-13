@@ -5,11 +5,16 @@ import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.QuestService;
+import com.javarush.kotovych.util.CookieSetter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
 
 @Slf4j
 @Controller
