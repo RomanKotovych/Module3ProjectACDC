@@ -8,6 +8,7 @@ import com.javarush.kotovych.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -17,7 +18,7 @@ public class UserListController {
 
 
     @GetMapping(UriConstants.USER_LIST_URI)
-    public ModelAndView getUserListPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
+    public ModelAndView getUserListPage(@SessionAttribute(value = Constants.ID) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.USER_LIST);
         modelAndView.addObject(Constants.USERS, userService.getAll());
 

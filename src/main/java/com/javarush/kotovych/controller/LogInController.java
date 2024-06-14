@@ -6,8 +6,8 @@ import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
-import com.javarush.kotovych.util.CookieSetter;
-import jakarta.servlet.http.HttpServletResponse;
+import com.javarush.kotovych.util.SessionAttributeSetter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +30,7 @@ public class LogInController {
     @PostMapping(UriConstants.LOGIN_URI)
     public ModelAndView logIn(@RequestParam(Constants.USERNAME) String username,
                               @RequestParam(Constants.PASSWORD) String password,
-                              HttpServletResponse response) {
+                              HttpServletRequest request) {
         ModelAndView loginPage = new ModelAndView(Constants.LOGIN);
         if (!userService.checkIfCorrect(username, password)) {
             log.info(LoggerConstants.USER_NOT_FOUND_LOG, username);
@@ -41,7 +41,7 @@ public class LogInController {
         User user = userService.getIfExists(username);
         if (user != null) {
             long id = user.getId();
-            CookieSetter.addCookie(response, Constants.ID, String.valueOf(id));
+            SessionAttributeSetter.addSessionAttribute(request, Constants.ID, String.valueOf(id));
             log.info(LoggerConstants.USER_LOGGED_IN_LOG, username);
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
         }

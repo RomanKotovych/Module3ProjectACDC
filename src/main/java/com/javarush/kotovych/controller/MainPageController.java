@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -21,19 +22,22 @@ public class MainPageController {
     private final UserService userService = NanoSpring.find(UserService.class);
 
     @GetMapping(UriConstants.MAIN_PAGE_URI)
-    public ModelAndView mainPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id,
+    public ModelAndView mainPage(@SessionAttribute(value = Constants.ID, required = false) String id,
                                  HttpServletRequest request) {
 
-        request.getSession().invalidate();
         SessionAttributeSetter.addSessionAttribute(request, Constants.CURRENT_PART, Constants.START);
 
         ModelAndView modelAndView = new ModelAndView(Constants.HOME_PAGE);
 
         modelAndView.addObject(Constants.QUESTS, questService.getAll());
+        if(id == null){
+            id = Constants.DEFAULT_ID;
+            SessionAttributeSetter.addSessionAttribute(request, Constants.ID, Constants.DEFAULT_ID);
+        }
 
-        boolean exists = userService.checkIfExists(id);
+        boolean exists = userService.checkIfExists(Long.parseLong(id));
         if (exists) {
-            User user = userService.getIfExists(id);
+            User user = userService.getIfExists(Long.parseLong(id));
             modelAndView.addObject(Constants.LOGGED_IN, true);
             modelAndView.addObject(Constants.USERNAME, user.getUsername());
         } else {

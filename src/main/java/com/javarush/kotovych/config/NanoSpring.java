@@ -31,6 +31,7 @@ public class NanoSpring {
     public static final String DOT = ".";
     public static final String EMPTY = "";
 
+
     @SuppressWarnings("unchecked")
     @SneakyThrows
     public <T> T find(Class<T> type) {
@@ -166,7 +167,7 @@ public class NanoSpring {
             try {
                 return superMethod.invoke(self, args);
             } finally {
-                SessionCreator.endTransactional();
+                sessionCreator.endTransactional();
             }
         }
     }

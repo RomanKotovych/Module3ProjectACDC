@@ -16,8 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class SessionCreator {
     private final SessionFactory sessionFactory;
-    private static final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
-    private static final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
+    private final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
+    private final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
 
     private static final ApplicationProperties applicationProperties = NanoSpring.find(ApplicationProperties.class);
 
@@ -50,7 +50,7 @@ public class SessionCreator {
         }
     }
 
-    public static void endTransactional() {
+    public void endTransactional() {
         AtomicInteger level = levelBox.get();
         Session session = sessionBox.get();
         if (level.decrementAndGet() == 0) {

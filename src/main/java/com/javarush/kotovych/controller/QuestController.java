@@ -24,13 +24,13 @@ public class QuestController {
     @GetMapping(UriConstants.QUEST_URI)
     public ModelAndView showQuest(@RequestParam(value = Constants.NAME) String questName,
                                   @SessionAttribute(name = Constants.CURRENT_PART, required = false) String currentPart,
-                                  @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id,
+                                  @SessionAttribute(value = Constants.ID, required = false) String id,
                                   HttpServletRequest request) {
         if (currentPart == null || questName == null) {
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
         }
 
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExists(Long.parseLong(id));
         setStatistics(user, currentPart);
         SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
 

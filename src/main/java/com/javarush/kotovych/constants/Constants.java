@@ -35,7 +35,6 @@ public class Constants {
     public static final String USER_NOT_FOUND_OR_INCORRECT_PASSWORD = "User not found or incorrect password";
     public static final String COULD_NOT_PARSE_QUEST_JSON = "Could not parse quest json";
 
-    public static final int DEFAULT_COOKIE_LIVING_TIME = 24 * 60 * 60;
 
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";

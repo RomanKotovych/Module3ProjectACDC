@@ -3,7 +3,6 @@ package com.javarush.kotovych.constants;
 
 import lombok.experimental.UtilityClass;
 
-import java.util.List;
 
 @UtilityClass
 public class UriConstants {

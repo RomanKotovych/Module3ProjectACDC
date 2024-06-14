@@ -5,8 +5,8 @@ import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
-import com.javarush.kotovych.util.CookieSetter;
-import jakarta.servlet.http.HttpServletResponse;
+import com.javarush.kotovych.util.SessionAttributeSetter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +29,7 @@ public class SignUpController {
     @PostMapping(UriConstants.SIGNUP_URI)
     public ModelAndView signUp(@RequestParam(Constants.USERNAME) String username,
                                @RequestParam(Constants.PASSWORD) String password,
-                               HttpServletResponse response) {
+                               HttpServletRequest request) {
 
         User userToCheck = userService.getIfExists(username);
 
@@ -37,7 +37,7 @@ public class SignUpController {
             User user = new User(username, password);
             userService.create(user);
             long id = user.getId();
-            CookieSetter.addCookie(response, Constants.ID, String.valueOf(id));
+            SessionAttributeSetter.addSessionAttribute(request, Constants.ID, String.valueOf(id));
 
             log.info(Constants.USER_WITH_USERNAME_CREATED, username);
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);

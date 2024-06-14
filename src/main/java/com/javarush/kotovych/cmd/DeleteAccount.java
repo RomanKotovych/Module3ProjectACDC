@@ -4,12 +4,12 @@ import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.UserService;
-import com.javarush.kotovych.util.CookieSetter;
-import jakarta.servlet.http.HttpServletResponse;
+import com.javarush.kotovych.util.SessionAttributeSetter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
@@ -22,10 +22,10 @@ public class DeleteAccount {
     }
 
     @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
-    public ModelAndView deleteAccount(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id,
-                                      HttpServletResponse response) {
+    public ModelAndView deleteAccount(@SessionAttribute(value = Constants.ID) long id,
+                                      HttpServletRequest request) {
         userService.delete(userService.getIfExists(id));
-        CookieSetter.addCookie(response, Constants.ID, Constants.DEFAULT_ID);
+        SessionAttributeSetter.addSessionAttribute(request, Constants.ID, Constants.DEFAULT_ID);
         log.info(LoggerConstants.USER_ID_DELETED_LOG, id);
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }

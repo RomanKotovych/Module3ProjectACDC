@@ -24,35 +24,28 @@ public class QuestCreationController {
 
 
     @GetMapping(UriConstants.CREATE_QUEST_URI)
-    public ModelAndView getCreateQuestPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        if (userService.checkIfExists(id)) {
-            return new ModelAndView(Constants.CREATE_QUEST);
-        }
-        return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+    public ModelAndView getCreateQuestPage() {
+        return new ModelAndView(Constants.CREATE_QUEST);
     }
 
     @PostMapping(UriConstants.CREATE_QUEST_URI)
     public ModelAndView createQuest(@RequestParam(Constants.JSON) String json,
-                                    @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        User user = userService.getIfExists(id);
-        if (user != null) {
-            long author = user.getId();
-            Quest quest;
-            try {
-                quest = QuestParser.parseFromJson(json);
-                quest.setAuthor(author);
-                log.info(LoggerConstants.QUEST_CREATED_LOG, quest.getName());
-            } catch (Exception e) {
-                log.info(Constants.FAILED_TO_CREATE_QUEST);
-                ModelAndView modelAndView = new ModelAndView(Constants.CREATE_QUEST);
-                modelAndView.addObject(Constants.ERROR, true);
-                return modelAndView;
-            }
-            if (!questService.checkIfExists(quest.getName())) {
-                questService.create(quest);
-            }
-            return new ModelAndView(Constants.REDIRECT_QUEST_NAME + quest.getName());
+                                    @SessionAttribute(value = Constants.ID, required = false) String id) {
+        long author = Long.parseLong(id);
+        Quest quest;
+        try {
+            quest = QuestParser.parseFromJson(json);
+            quest.setAuthor(author);
+            log.info(LoggerConstants.QUEST_CREATED_LOG, quest.getName());
+        } catch (Exception e) {
+            log.info(Constants.FAILED_TO_CREATE_QUEST);
+            ModelAndView modelAndView = new ModelAndView(Constants.CREATE_QUEST);
+            modelAndView.addObject(Constants.ERROR, true);
+            return modelAndView;
         }
-        return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
+        if (!questService.checkIfExists(quest.getName())) {
+            questService.create(quest);
+        }
+        return new ModelAndView(Constants.REDIRECT_QUEST_NAME + quest.getName());
     }
 }

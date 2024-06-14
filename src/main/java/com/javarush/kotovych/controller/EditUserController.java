@@ -20,9 +20,9 @@ public class EditUserController {
 
 
     @GetMapping(UriConstants.EDIT_USER_URI)
-    public ModelAndView getEditUserPage(@CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
+    public ModelAndView getEditUserPage(@SessionAttribute(value = Constants.ID, required = false) String id) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExists(Long.parseLong(id));
         log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
         modelAndView.addObject(Constants.USER, user);
         return modelAndView;
@@ -31,7 +31,7 @@ public class EditUserController {
     @PostMapping(UriConstants.EDIT_USER_URI)
     public ModelAndView editUser(@RequestParam(Constants.USERNAME) String editUsername,
                                  @RequestParam(Constants.PASSWORD) String editPassword,
-                                 @CookieValue(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
+                                 @SessionAttribute(value = Constants.ID, required = false) String id) {
 
         ModelAndView editPage = new ModelAndView(UriConstants.EDIT_USER_REDIRECT);
 
@@ -40,7 +40,7 @@ public class EditUserController {
             return editPage;
         }
 
-        User user = userService.getIfExists(id);
+        User user = userService.getIfExists(Long.parseLong(id));
         if (user.getLastUpdated() == null || System.currentTimeMillis() - user.getLastUpdated().getEpochSecond() * 1000 > Constants.EDITING_WAITING_TIME) {
             user.setUsername(editUsername);
             user.setPassword(editPassword);
