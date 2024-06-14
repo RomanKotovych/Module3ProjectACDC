@@ -54,10 +54,13 @@ public class SessionCreator {
         AtomicInteger level = levelBox.get();
         Session session = sessionBox.get();
         if (level.decrementAndGet() == 0) {
+            sessionBox.remove();
             try {
                 session.getTransaction().commit();
+                session.close();
             } catch (RuntimeException e) {
                 session.getTransaction().rollback();
+                session.close();
                 throw new AppException(e);
             }
         }

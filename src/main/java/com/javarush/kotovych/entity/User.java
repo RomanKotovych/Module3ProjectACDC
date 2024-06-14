@@ -17,7 +17,7 @@ import java.time.Instant;
 @Builder
 @Entity
 @Table(name = "users", schema = "public")
-//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cacheable
 public class User implements Serializable {
 
     @Serial
