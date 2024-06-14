@@ -29,12 +29,9 @@ public abstract class BaseRepository<T> implements Repository<T> {
     @Override
     public Optional<T> get(long id) {
         Session session = sessionCreator.getSession();
-//        session.clear();
-        Query<T> query = session.createQuery("select e from %s e where id=:id".formatted(entityClass.getName()), entityClass);
-        query.setParameter(Constants.ID, id);
-//        T entity = session.find(entityClass, id);
-//        return Optional.ofNullable(entity);
-        return query.stream().findFirst();
+        session.clear();
+        T entity = session.find(entityClass, id);
+        return Optional.ofNullable(entity);
     }
 
     @Override

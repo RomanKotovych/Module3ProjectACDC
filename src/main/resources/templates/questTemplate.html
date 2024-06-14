@@ -46,7 +46,7 @@
 <!-- Кнопка для удаления квеста -->
 <div class="delete-button" th:if="${author}">
     <form action="/delete-quest" method="post">
-        <input type="hidden" name="id" th:value="${quest.getId()}"/>
+        <input type="hidden" name="name" th:value="${quest.getName()}"/>
         <button type="submit" class="btn btn-danger">Удалить квест</button>
     </form>
 </div>

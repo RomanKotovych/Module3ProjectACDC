@@ -20,9 +20,9 @@ public class DeleteQuest {
 
 
     @PostMapping(UriConstants.DELETE_QUEST_URI)
-    public ModelAndView deleteQuest(@RequestParam(value = Constants.ID, defaultValue = Constants.DEFAULT_ID) long id) {
-        questService.delete(questService.getIfExists(id));
-        log.info(LoggerConstants.QUEST_ID_DELETED_LOG, id);
+    public ModelAndView deleteQuest(@RequestParam(value = Constants.NAME) String name) {
+        questService.delete(questService.getIfExists(name));
+        log.info(LoggerConstants.QUEST_ID_DELETED_LOG, name);
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }
 }

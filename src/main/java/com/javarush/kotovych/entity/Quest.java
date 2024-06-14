@@ -18,7 +18,7 @@ import org.hibernate.annotations.Cache;
 @AllArgsConstructor
 @Builder
 @Table(name = "quest", schema = "public")
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+//@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Quest implements Serializable {
 
     @Serial

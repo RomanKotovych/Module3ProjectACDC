@@ -35,42 +35,40 @@ public class QuestService extends QuestRepository {
         return query.uniqueResult() != null;
     }
 
-    public Quest getIfExists(long id) {
-        Quest quest = getQuestFromCache(id);
+
+    public Quest getByName(String name) {
+        Session session = sessionCreator.getSession();
+        Query<Quest> query = session.createQuery("select e from Quest e where name = :name", Quest.class);
+        query.setParameter(Constants.NAME, name);
+
+        return query.uniqueResult();
+    }
+
+    public Quest getIfExists(String name) {
+        Quest quest = getQuestFromCache(name);
         if (quest != null) {
             return quest;
         }
-        quest = get(id).orElse(null);
+        quest = getByName(name);
         if (quest != null) {
             storeQuestInCache(quest);
         }
         return quest;
-    }
 
-    public Quest getIfExists(String name) {
-        Session session = sessionCreator.getSession();
-        Query<Long> query = session.createQuery("select e.id from Quest e where name = :name", Long.class);
-        query.setParameter(Constants.NAME, name);
-
-        Long questId = query.uniqueResult();
-        if(questId == null){
-            return null;
-        }
-        return getIfExists(questId);
     }
 
 
-    public void storeQuestInCache(Quest quest) {
+    private void storeQuestInCache(Quest quest) {
         try {
             String questJson = objectMapper.writeValueAsString(quest);
-            RedisConfig.getRedisCommands().set("quest:" + quest.getId(), questJson);
+            RedisConfig.getRedisCommands().set("quest:" + quest.getName(), questJson);
         } catch (JsonProcessingException e) {
             throw new AppException(e);
         }
     }
 
-    public Quest getQuestFromCache(long questId) {
-        String questJson = RedisConfig.getRedisCommands().get("quest:" + questId);
+    private Quest getQuestFromCache(String name) {
+        String questJson = RedisConfig.getRedisCommands().get("quest:" + name);
         if (questJson != null) {
             try {
                 return objectMapper.readValue(questJson, Quest.class);
