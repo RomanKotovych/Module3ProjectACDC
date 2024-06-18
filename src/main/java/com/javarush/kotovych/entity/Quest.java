@@ -25,10 +25,8 @@ public class Quest implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String name;
 
-    @Column
     private String description;
 
 
@@ -36,6 +34,5 @@ public class Quest implements Serializable {
     @JoinColumn(name = "quest_id")
     private List<Question> questions = new ArrayList<>();
 
-    @Column
     private long author;
 }

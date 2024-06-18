@@ -27,13 +27,10 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String name;
 
-    @Column
     private String situation;
 
-    @Column
     private String text;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

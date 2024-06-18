@@ -25,7 +25,6 @@ public class Answer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String text;
 
     @Column(name = "next_question")

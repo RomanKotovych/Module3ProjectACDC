@@ -2,8 +2,6 @@ package com.javarush.kotovych.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -30,13 +28,10 @@ public class User implements Serializable {
     @Column(unique = true)
     private String username;
 
-    @Column
     private String password;
 
-    @Column
     private int wins;
 
-    @Column
     private int losses;
 
 
