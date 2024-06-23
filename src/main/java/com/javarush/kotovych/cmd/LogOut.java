@@ -16,7 +16,7 @@ public class LogOut {
 
     @PostMapping(UriConstants.LOGOUT_URI)
     public ModelAndView logout(HttpServletRequest request) {
-        SessionAttributeSetter.addSessionAttribute(request, Constants.ID, Constants.DEFAULT_ID);
+        request.getSession().invalidate();
         log.info(LoggerConstants.USER_LOGGED_OUT_LOG);
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }

@@ -5,13 +5,21 @@ import liquibase.Scope;
 import liquibase.command.CommandScope;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class LiquibaseInit {
-    private static final ApplicationProperties properties = NanoSpring.find(ApplicationProperties.class);
+
+    private final ApplicationProperties properties;
+
+    @Autowired
+    public LiquibaseInit(ApplicationProperties properties) {
+        this.properties = properties;
+    }
 
     @SneakyThrows
-    public static void init() {
+    public void init() {
         Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
             CommandScope update = new CommandScope("update");
 

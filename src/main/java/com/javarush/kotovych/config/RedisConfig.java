@@ -4,14 +4,19 @@ import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
 import jakarta.annotation.PreDestroy;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RedisConfig {
-    private static final RedisClient redisClient;
-    private static final StatefulRedisConnection<String, String> connection;
-    private static final ApplicationProperties properties = NanoSpring.find(ApplicationProperties.class);
+    private static RedisClient redisClient;
+    private static StatefulRedisConnection<String, String> connection;
+    private final ApplicationProperties properties;
 
+    public RedisConfig(ApplicationProperties properties) {
+        this.properties = properties;
+    }
 
-    static {
+    public void init() {
         redisClient = RedisClient.create(properties.getProperty(ApplicationProperties.REDIS_URL));
         connection = redisClient.connect();
     }
@@ -21,7 +26,7 @@ public class RedisConfig {
     }
 
     @PreDestroy
-    public static void shutdown() {
+    public void shutdown() {
         connection.close();
         redisClient.shutdown();
     }
