@@ -15,16 +15,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Slf4j
 @Component
+@Slf4j
 public class SessionCreator {
     private final SessionFactory sessionFactory;
     private final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
     private final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
 
     @Autowired
-    public SessionCreator(ApplicationProperties applicationProperties, LiquibaseInit liquibaseInit) {
-        liquibaseInit.init();
+    public SessionCreator(ApplicationProperties applicationProperties) {
         sessionFactory = new Configuration()
                 .addProperties(applicationProperties)
                 .addAnnotatedClass(User.class)
