@@ -1,6 +1,7 @@
 package com.javarush.kotovych.config;
 
 import lombok.SneakyThrows;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.FileReader;
 import java.net.URI;
@@ -9,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Properties;
 
+@Configuration
 public class ApplicationProperties extends Properties {
 
     public static final String HIBERNATE_CONNECTION_URL = "hibernate.connection.url";

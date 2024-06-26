@@ -10,19 +10,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Component
 @Slf4j
 public class SessionCreator {
     private final SessionFactory sessionFactory;
     private final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
     private final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
 
-    private static final ApplicationProperties applicationProperties = NanoSpring.find(ApplicationProperties.class);
-
-    public SessionCreator() {
-        LiquibaseInit.init();
+    @Autowired
+    public SessionCreator(ApplicationProperties applicationProperties) {
         sessionFactory = new Configuration()
                 .addProperties(applicationProperties)
                 .addAnnotatedClass(User.class)
