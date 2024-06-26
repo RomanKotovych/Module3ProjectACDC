@@ -1,24 +1,20 @@
 package com.javarush.kotovych.repository;
 
+import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.config.SessionCreator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 import java.util.Optional;
-
 
 @RequiredArgsConstructor
 @Transactional
 public abstract class BaseRepository<T> implements Repository<T> {
 
-    @Autowired
-    private SessionCreator sessionCreator;
-
-
+    private final SessionCreator sessionCreator = NanoSpring.find(SessionCreator.class);
     private final Class<T> entityClass;
 
     @Override

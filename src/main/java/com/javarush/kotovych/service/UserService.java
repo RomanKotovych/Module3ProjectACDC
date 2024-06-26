@@ -1,5 +1,6 @@
 package com.javarush.kotovych.service;
 
+import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.config.SessionCreator;
@@ -8,7 +9,6 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -16,12 +16,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Transactional
 public class UserService extends UserRepository {
-    private final SessionCreator sessionCreator;
+    private final SessionCreator sessionCreator = NanoSpring.find(SessionCreator.class);
 
-    @Autowired
-    public UserService(SessionCreator sessionCreator) {
+    public UserService() {
         super(User.class);
-        this.sessionCreator = sessionCreator;
     }
 
     public boolean checkIfExists(long id) {

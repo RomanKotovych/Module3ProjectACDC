@@ -1,11 +1,11 @@
 package com.javarush.kotovych.cmd;
 
+import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.QuestService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,12 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @Controller
 public class DeleteQuest {
-    private final QuestService questService;
 
-    @Autowired
-    public DeleteQuest(QuestService questService) {
-        this.questService = questService;
-    }
+    private final QuestService questService = NanoSpring.find(QuestService.class);
 
 
     @PostMapping(UriConstants.DELETE_QUEST_URI)

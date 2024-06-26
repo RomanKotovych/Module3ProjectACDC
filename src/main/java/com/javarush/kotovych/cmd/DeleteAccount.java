@@ -7,7 +7,6 @@ import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class DeleteAccount {
     private final UserService userService;
 
-    @Autowired
     public DeleteAccount(UserService userService) {
         this.userService = userService;
     }

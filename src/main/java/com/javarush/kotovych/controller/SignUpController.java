@@ -1,5 +1,6 @@
 package com.javarush.kotovych.controller;
 
+import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
@@ -7,7 +8,6 @@ import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SignUpController {
 
-    private final UserService userService;
-
-    @Autowired
-    public SignUpController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService = NanoSpring.find(UserService.class);
 
 
     @GetMapping(UriConstants.SIGNUP_URI)
