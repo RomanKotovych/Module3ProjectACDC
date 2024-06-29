@@ -6,36 +6,34 @@ import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.FilterUrlChecker;
-import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import jakarta.servlet.*;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+
+@Setter
 @Component
 @WebFilter(urlPatterns = UriConstants.ALL_URIS)
 @Slf4j
-@RequiredArgsConstructor
-public class LoggedInFilter implements Filter {
+public class LoggedInFilter extends HttpFilter {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse resp = (HttpServletResponse) servletResponse;
-
+    public void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
         String uri = req.getRequestURI();
         log.info(LoggerConstants.REQUEST_TO_LOG, req.getMethod(), uri);
 
         Object idSessionValue = req.getSession().getAttribute(Constants.ID);
         long longIdSessionValue;
-        if(idSessionValue == null){
+        if (idSessionValue == null) {
             longIdSessionValue = Constants.DEFAULT_ID;
         } else {
             longIdSessionValue = Long.parseLong((String) idSessionValue);
@@ -47,6 +45,7 @@ public class LoggedInFilter implements Filter {
                 return;
             }
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(req, resp);
     }
+
 }
