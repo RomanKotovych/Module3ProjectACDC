@@ -2,7 +2,6 @@ package com.javarush.kotovych.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,7 +15,6 @@ import java.time.Instant;
 @Builder
 @Entity
 @Table(name = "users", schema = "public")
-@RedisHash("User")
 public class User implements Serializable {
 
     @Serial

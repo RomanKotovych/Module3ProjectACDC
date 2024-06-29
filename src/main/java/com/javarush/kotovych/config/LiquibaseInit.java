@@ -4,21 +4,25 @@ import com.javarush.kotovych.constants.Constants;
 import liquibase.Scope;
 import liquibase.command.CommandScope;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.stereotype.Component;
 
 
+@RequiredArgsConstructor
+@Component
 public class LiquibaseInit {
-    private static final ApplicationProperties properties = NanoSpring.find(ApplicationProperties.class);
+    private final ApplicationProperties properties;
 
     @SneakyThrows
-    public static void init() {
+    public void init() {
         Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
             CommandScope update = new CommandScope("update");
 
             update.addArgumentValue("changelogFile", "db/changelog.xml");
-            update.addArgumentValue("url", properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_URL));
-            update.addArgumentValue(Constants.USERNAME, properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_USERNAME));
-            update.addArgumentValue(Constants.PASSWORD, properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_PASSWORD));
+            update.addArgumentValue("url", properties.getProperty(ApplicationProperties.CONNECTION_URL));
+            update.addArgumentValue(Constants.USERNAME, properties.getProperty(ApplicationProperties.CONNECTION_USERNAME));
+            update.addArgumentValue(Constants.PASSWORD, properties.getProperty(ApplicationProperties.CONNECTION_PASSWORD));
             update.execute();
         });
 

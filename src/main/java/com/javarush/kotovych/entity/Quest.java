@@ -2,7 +2,6 @@ package com.javarush.kotovych.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -17,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "quest", schema = "public")
-@RedisHash("Quest")
 public class Quest implements Serializable {
 
     @Serial

@@ -6,6 +6,7 @@ import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,18 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class DeleteAccount {
     private final UserService userService;
 
-    public DeleteAccount(UserService userService) {
-        this.userService = userService;
-    }
-
     @PostMapping(UriConstants.DELETE_ACCOUNT_URI)
-    public ModelAndView deleteAccount(@SessionAttribute(value = Constants.ID) long id,
+    public ModelAndView deleteAccount(@SessionAttribute(value = Constants.ID) Long id,
                                       HttpServletRequest request) {
-        userService.delete(userService.getIfExists(id));
-        SessionAttributeSetter.addSessionAttribute(request, Constants.ID, Constants.DEFAULT_ID);
+        userService.deleteById(id);
+        SessionAttributeSetter.addSessionAttribute(request, Constants.ID, String.valueOf(Constants.DEFAULT_ID));
         log.info(LoggerConstants.USER_ID_DELETED_LOG, id);
         return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }

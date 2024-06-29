@@ -1,56 +1,62 @@
 package com.javarush.kotovych.service;
 
-import com.javarush.kotovych.config.NanoSpring;
-import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.User;
-import com.javarush.kotovych.config.SessionCreator;
+import com.javarush.kotovych.repository.Repository;
 import com.javarush.kotovych.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 @Transactional
-public class UserService extends UserRepository {
-    private final SessionCreator sessionCreator = NanoSpring.find(SessionCreator.class);
+public class UserService implements Repository<User> {
+    private final UserRepository userRepository;
 
-    public UserService() {
-        super(User.class);
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
-    public boolean checkIfExists(long id) {
-        User user = get(id).orElse(null);
-        return user != null;
+    @Override
+    public User get(long id) {
+        return userRepository.getReferenceById(id);
     }
 
-
-    public User getIfExists(long id) {
-        return get(id).orElse(null);
+    public User get(String name){
+        return userRepository.findByUsername(name);
     }
 
-    public User getIfExists(String username) {
-        Session session = sessionCreator.getSession();
-        Query<Long> query = session.createQuery("select u.id from User u where u.username = :username", Long.class);
-        query.setParameter(Constants.USERNAME, username);
-
-        Long userId = query.uniqueResult();
-        if(userId == null){
-            return null;
-        }
-        return getIfExists(userId);
+    @Override
+    public void create(User entity) {
+        userRepository.save(entity);
     }
 
-    public boolean checkIfCorrect(String username, String password) {
-        Session session = sessionCreator.getSession();
-        Query<User> query = session.createQuery("from User where username = :username and password = :password", User.class);
-        query.setParameter(Constants.USERNAME, username);
-        query.setParameter(Constants.PASSWORD, password);
-
-        User user = query.uniqueResult();
-        return user != null;
+    @Override
+    public void update(User entity) {
+        userRepository.save(entity);
     }
+
+    @Override
+    public void delete(User entity) {
+        userRepository.delete(entity);
+    }
+
+    public void deleteById(long id){
+        userRepository.deleteById(id);
+    }
+
+    public boolean existsById(long id){
+        return userRepository.existsById(id);
+    }
+
+    public boolean checkIfCorrect(String username, String password){
+        return userRepository.exists(username, password);
+    }
+
 }

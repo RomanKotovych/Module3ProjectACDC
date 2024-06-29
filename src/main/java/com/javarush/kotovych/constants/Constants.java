@@ -28,7 +28,7 @@ public class Constants {
     public static final String CREATE_QUEST = "create-quest";
     public static final String FAILED_TO_CREATE_USER_BECAUSE_IT_ALREADY_EXISTS = "Failed to create user because it already exists";
     public static final String USER_WITH_USERNAME_CREATED = "User with username {} created";
-    public static final String DEFAULT_ID = "0";
+    public static final Long DEFAULT_ID = 0L;
     public static final String JSON = "json";
     public static final String LOGIN = "login";
     public static final String ERROR = "error";

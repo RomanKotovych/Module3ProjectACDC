@@ -1,11 +1,11 @@
 package com.javarush.kotovych.controller;
 
-import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +15,15 @@ import java.time.Instant;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class EditUserController {
-    private final UserService userService = NanoSpring.find(UserService.class);
+    private final UserService userService;
 
 
     @GetMapping(UriConstants.EDIT_USER_URI)
-    public ModelAndView getEditUserPage(@SessionAttribute(value = Constants.ID, required = false) String id) {
+    public ModelAndView getEditUserPage(@SessionAttribute(value = Constants.ID, required = false) long id) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
-        User user = userService.getIfExists(Long.parseLong(id));
+        User user = userService.get(id);
         log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
         modelAndView.addObject(Constants.USER, user);
         return modelAndView;
@@ -31,7 +32,7 @@ public class EditUserController {
     @PostMapping(UriConstants.EDIT_USER_URI)
     public ModelAndView editUser(@RequestParam(Constants.USERNAME) String editUsername,
                                  @RequestParam(Constants.PASSWORD) String editPassword,
-                                 @SessionAttribute(value = Constants.ID, required = false) String id) {
+                                 @SessionAttribute(value = Constants.ID, required = true) Long id) {
 
         ModelAndView editPage = new ModelAndView(UriConstants.EDIT_USER_REDIRECT);
 
@@ -40,7 +41,7 @@ public class EditUserController {
             return editPage;
         }
 
-        User user = userService.getIfExists(Long.parseLong(id));
+        User user = userService.get(id);
         if (user.getLastUpdated() == null || System.currentTimeMillis() - user.getLastUpdated().getEpochSecond() * 1000 > Constants.EDITING_WAITING_TIME) {
             user.setUsername(editUsername);
             user.setPassword(editPassword);

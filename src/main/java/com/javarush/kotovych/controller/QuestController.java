@@ -1,6 +1,5 @@
 package com.javarush.kotovych.controller;
 
-import com.javarush.kotovych.config.NanoSpring;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
 import com.javarush.kotovych.entity.Question;
@@ -10,31 +9,33 @@ import com.javarush.kotovych.service.QuestService;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
+@RequiredArgsConstructor
 public class QuestController {
 
-    private final QuestService questService = NanoSpring.find(QuestService.class);
-    private final UserService userService = NanoSpring.find(UserService.class);
+    private final QuestService questService;
+    private final UserService userService;
 
     @GetMapping(UriConstants.QUEST_URI)
     public ModelAndView showQuest(@RequestParam(value = Constants.NAME) String questName,
                                   @SessionAttribute(name = Constants.CURRENT_PART, required = false) String currentPart,
-                                  @SessionAttribute(value = Constants.ID, required = false) String id,
+                                  @SessionAttribute(value = Constants.ID, required = false) Long id,
                                   HttpServletRequest request) {
         if (currentPart == null || questName == null) {
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
         }
 
-        User user = userService.getIfExists(Long.parseLong(id));
+        User user = userService.get(id);
         setStatistics(user, currentPart);
         SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
 
-        Quest quest = questService.getIfExists(questName);
+        Quest quest = questService.get(questName);
         if (quest != null) {
             ModelAndView modelAndView = new ModelAndView(chooseTemplate(currentPart));
             addRequiredObjects(modelAndView, quest, user, currentPart);

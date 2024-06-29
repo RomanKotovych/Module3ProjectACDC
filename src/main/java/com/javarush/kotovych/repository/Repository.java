@@ -8,7 +8,7 @@ public interface Repository<T> {
 
     Collection<T> getAll();
 
-    Optional<T> get(long id);
+    T get(long id);
 
 
     void create(T entity);

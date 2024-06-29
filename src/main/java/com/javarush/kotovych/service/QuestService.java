@@ -1,82 +1,46 @@
 package com.javarush.kotovych.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javarush.kotovych.config.NanoSpring;
-import com.javarush.kotovych.config.RedisConfig;
-import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.entity.Quest;
-import com.javarush.kotovych.config.SessionCreator;
-import com.javarush.kotovych.exception.AppException;
 import com.javarush.kotovych.repository.QuestRepository;
-import jakarta.transaction.Transactional;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import com.javarush.kotovych.repository.Repository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
+import java.util.List;
+
 
 @Service
+@RequiredArgsConstructor
 @Transactional
-public class QuestService extends QuestRepository {
-    private final SessionCreator sessionCreator = NanoSpring.find(SessionCreator.class);
+public class QuestService implements Repository<Quest> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final QuestRepository questRepository;
 
-    public QuestService() {
-        super(Quest.class);
+    @Override
+    public void update(Quest entity) {
+        questRepository.save(entity);
     }
 
-    public boolean checkIfExists(String name) {
-        Session session = sessionCreator.getSession();
-        Query<Quest> query = session.createQuery("from Quest where name = :name", Quest.class);
-        query.setParameter(Constants.NAME, name);
-
-        return query.uniqueResult() != null;
+    public Quest get(String name){
+        return questRepository.getByName(name);
     }
 
-
-    public Quest getByName(String name) {
-        Session session = sessionCreator.getSession();
-        Query<Quest> query = session.createQuery("select e from Quest e where name = :name", Quest.class);
-        query.setParameter(Constants.NAME, name);
-
-        return query.uniqueResult();
+    @Override
+    public void delete(Quest entity) {
+        questRepository.delete(entity);
     }
 
-    public Quest getIfExists(String name) {
-        Quest quest = getQuestFromCache(name);
-        if (quest != null) {
-            return quest;
-        }
-        quest = getByName(name);
-        if (quest != null) {
-            storeQuestInCache(quest);
-        }
-        return quest;
-
+    public Quest get(long id) {
+        return questRepository.getReferenceById(id);
     }
 
 
-    private void storeQuestInCache(Quest quest) {
-        try {
-            String questJson = objectMapper.writeValueAsString(quest);
-            RedisConfig.getRedisCommands().set("quest:" + quest.getName(), questJson);
-        } catch (JsonProcessingException e) {
-            throw new AppException(e);
-        }
+    public void create(Quest quest){
+        questRepository.save(quest);
     }
 
-    private Quest getQuestFromCache(String name) {
-        String questJson = RedisConfig.getRedisCommands().get("quest:" + name);
-        if (questJson != null) {
-            try {
-                return objectMapper.readValue(questJson, Quest.class);
-            } catch (IOException e) {
-                throw new AppException(e);
-            }
-        }
-        return null;
+    public List<Quest> getAll(){
+        return questRepository.findAll();
     }
-
 }
