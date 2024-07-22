@@ -3,8 +3,11 @@ package com.javarush.kotovych.controller;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
+import com.javarush.kotovych.dto.QuestTo;
+import com.javarush.kotovych.dto.UserTo;
 import com.javarush.kotovych.entity.Quest;
 import com.javarush.kotovych.service.QuestService;
+import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.QuestParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +31,11 @@ public class QuestCreationController {
 
     @PostMapping(UriConstants.CREATE_QUEST_URI)
     public ModelAndView createQuest(@RequestParam(Constants.JSON) String json,
-                                    @SessionAttribute(value = Constants.ID, required = false) String id) {
-        long author = Long.parseLong(id);
-        Quest quest;
+                                    @SessionAttribute(value = Constants.USER) UserTo user) {
+        QuestTo quest;
         try {
             quest = QuestParser.parseFromJson(json);
-            quest.setAuthor(author);
+            quest.setAuthor(user);
             log.info(LoggerConstants.QUEST_CREATED_LOG, quest.getName());
         } catch (Exception e) {
             log.info(Constants.FAILED_TO_CREATE_QUEST);

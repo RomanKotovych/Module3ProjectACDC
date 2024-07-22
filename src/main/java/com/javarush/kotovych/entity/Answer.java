@@ -14,7 +14,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "answer", schema = "public")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Answer implements Serializable {
 

@@ -1,7 +1,8 @@
 package com.javarush.kotovych.service;
 
+import com.javarush.kotovych.dto.UserTo;
 import com.javarush.kotovych.entity.User;
-import com.javarush.kotovych.repository.Repository;
+import com.javarush.kotovych.mapping.Dto;
 import com.javarush.kotovych.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,36 +16,34 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class UserService implements Repository<User> {
+public class UserService {
     private final UserRepository userRepository;
 
-    @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserTo> getAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(Dto.MAPPER::toDto)
+                .toList();
     }
 
-    @Override
-    public User get(long id) {
-        return userRepository.getReferenceById(id);
+    public UserTo get(long id) {
+        return Dto.MAPPER.toDto(userRepository.findById(id).orElse(null));
     }
 
-    public User get(String name){
-        return userRepository.findByUsername(name);
+    public UserTo get(String name){
+        return Dto.MAPPER.toDto(userRepository.findByUsername(name));
     }
 
-    @Override
-    public void create(User entity) {
-        userRepository.save(entity);
+    public void create(UserTo entity) {
+        userRepository.save(Dto.MAPPER.toEntity(entity));
     }
 
-    @Override
-    public void update(User entity) {
-        userRepository.save(entity);
+    public void update(UserTo entity) {
+        userRepository.save(Dto.MAPPER.toEntity(entity));
     }
 
-    @Override
-    public void delete(User entity) {
-        userRepository.delete(entity);
+    public void delete(UserTo entity) {
+        userRepository.delete(Dto.MAPPER.toEntity(entity));
     }
 
     public void deleteById(long id){

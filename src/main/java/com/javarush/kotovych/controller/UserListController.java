@@ -2,6 +2,7 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
+import com.javarush.kotovych.dto.UserTo;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,12 @@ public class UserListController {
 
 
     @GetMapping(UriConstants.USER_LIST_URI)
-    public ModelAndView getUserListPage(@SessionAttribute(value = Constants.ID) long id) {
+    public ModelAndView getUserListPage(@SessionAttribute(value = Constants.USER) UserTo user) {
         ModelAndView modelAndView = new ModelAndView(Constants.USER_LIST);
         modelAndView.addObject(Constants.USERS, userService.getAll());
 
-        User user = userService.get(id);
 
-        modelAndView.addObject(Constants.USERNAME, user.getUsername());
+        modelAndView.addObject(Constants.USER, user);
         return modelAndView;
     }
 }

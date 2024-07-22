@@ -16,7 +16,6 @@ import org.hibernate.annotations.Cache;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "question", schema = "public")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Question implements Serializable {
 

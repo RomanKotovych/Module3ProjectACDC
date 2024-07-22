@@ -1,8 +1,8 @@
 package com.javarush.kotovych.service;
 
-import com.javarush.kotovych.entity.Quest;
+import com.javarush.kotovych.dto.QuestTo;
+import com.javarush.kotovych.mapping.Dto;
 import com.javarush.kotovych.repository.QuestRepository;
-import com.javarush.kotovych.repository.Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,34 +13,34 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class QuestService implements Repository<Quest> {
+public class QuestService {
 
     private final QuestRepository questRepository;
 
-    @Override
-    public void update(Quest entity) {
-        questRepository.save(entity);
+    public void update(QuestTo entity) {
+        questRepository.save(Dto.MAPPER.toEntity(entity));
     }
 
-    public Quest get(String name){
-        return questRepository.getByName(name);
+    public QuestTo get(String name){
+        return Dto.MAPPER.toDto(questRepository.getByName(name));
     }
 
-    @Override
-    public void delete(Quest entity) {
-        questRepository.delete(entity);
+    public void delete(QuestTo entity) {
+        questRepository.delete(Dto.MAPPER.toEntity(entity));
     }
 
-    public Quest get(long id) {
-        return questRepository.getReferenceById(id);
+    public QuestTo get(long id) {
+        return Dto.MAPPER.toDto(questRepository.getReferenceById(id));
     }
 
 
-    public void create(Quest quest){
-        questRepository.save(quest);
+    public void create(QuestTo quest){
+        questRepository.save(Dto.MAPPER.toEntity(quest));
     }
 
-    public List<Quest> getAll(){
-        return questRepository.findAll();
+    public List<QuestTo> getAll(){
+        return questRepository.findAll().stream()
+                .map(Dto.MAPPER::toDto)
+                .toList();
     }
 }

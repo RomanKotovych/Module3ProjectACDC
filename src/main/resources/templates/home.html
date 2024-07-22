@@ -22,7 +22,7 @@
             <a th:if="${!loggedIn}" href="#" th:href="@{/signup}">Sign Up</a>
         </div>
         <div th:if="${loggedIn}" class="user-profile">
-            <a href="#" th:href="@{/edit-user}" th:text="${username}"></a>
+            <a href="#" th:href="@{/edit-user}" th:text="${user.getUsername()}"></a>
         </div>
     </div>
 </nav>
@@ -40,7 +40,7 @@
                     <h3 th:text="${quest.getName()}"></h3>
                     <p th:text="${quest.getDescription()}"></p>
                 </div>
-                <div class="author" th:text="'Id автора: ' + ${quest.getAuthor()}"></div>
+                <div class="author" th:text="'Id автора: ' + ${quest.getAuthor().getId()}"></div>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
+import com.javarush.kotovych.dto.UserTo;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.QuestService;
 import com.javarush.kotovych.service.UserService;
@@ -22,7 +23,7 @@ public class MainPageController {
     private final UserService userService;
 
     @GetMapping(UriConstants.MAIN_PAGE_URI)
-    public ModelAndView mainPage(@SessionAttribute(value = Constants.ID, required = false) Long id,
+    public ModelAndView mainPage(@SessionAttribute(value = Constants.USER, required = false) UserTo user,
                                  HttpServletRequest request) {
 
         SessionAttributeSetter.addSessionAttribute(request, Constants.CURRENT_PART, Constants.START);
@@ -32,13 +33,11 @@ public class MainPageController {
         modelAndView.addObject(Constants.QUESTS, questService.getAll());
 
 
-        if (id == null || !userService.existsById(id)) {
+        if (user == null || !userService.existsById(user.getId())) {
             modelAndView.addObject(Constants.LOGGED_IN, false);
-            modelAndView.addObject(Constants.USERNAME, Constants.NOT_LOGGED_IN);
         } else {
-            User user = userService.get(id);
             modelAndView.addObject(Constants.LOGGED_IN, true);
-            modelAndView.addObject(Constants.USERNAME, user.getUsername());
+            modelAndView.addObject(Constants.USER, user);
         }
 
         return modelAndView;

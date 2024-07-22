@@ -33,10 +33,6 @@ public class User implements Serializable {
 
     private int losses;
 
-
-    @Column(name = "last_updated")
-    private Instant lastUpdated;
-
     public User(String username, String password) {
         this.username = username;
         this.password = password;

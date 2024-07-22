@@ -2,6 +2,7 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
+import com.javarush.kotovych.dto.UserTo;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
 import com.javarush.kotovych.util.SessionAttributeSetter;
@@ -32,13 +33,15 @@ public class SignUpController {
                                @RequestParam(Constants.PASSWORD) String password,
                                HttpServletRequest request) {
 
-        User userToCheck = userService.get(username);
+        UserTo userToCheck = userService.get(username);
 
         if (userToCheck == null) {
-            User user = new User(username, password);
+            UserTo user = UserTo.builder()
+                    .username(username)
+                    .password(password)
+                    .build();
             userService.create(user);
-            long id = user.getId();
-            SessionAttributeSetter.addSessionAttribute(request, Constants.ID, String.valueOf(id));
+            SessionAttributeSetter.addSessionAttribute(request, Constants.USER, userService.get(username));
 
             log.info(Constants.USER_WITH_USERNAME_CREATED, username);
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);

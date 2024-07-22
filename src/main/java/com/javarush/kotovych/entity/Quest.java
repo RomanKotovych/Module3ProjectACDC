@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "quest", schema = "public")
 public class Quest implements Serializable {
 
     @Serial
@@ -34,5 +33,6 @@ public class Quest implements Serializable {
     @JoinColumn(name = "quest_id")
     private List<Question> questions = new ArrayList<>();
 
-    private long author;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private User author;
 }

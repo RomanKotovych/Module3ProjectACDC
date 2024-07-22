@@ -21,7 +21,7 @@
             <a href="#" th:href="@{/login}">Sign In</a>
         </div>
         <div class="user-profile">
-            <a href="#" th:href="@{/edit-user}" th:text="${username}"></a>
+            <a href="#" th:href="@{/edit-user}" th:text="${user.getUsername()}"></a>
         </div>
     </div>
 </nav>

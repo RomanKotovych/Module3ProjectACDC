@@ -2,6 +2,9 @@ package com.javarush.kotovych.controller;
 
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.UriConstants;
+import com.javarush.kotovych.dto.QuestTo;
+import com.javarush.kotovych.dto.QuestionTo;
+import com.javarush.kotovych.dto.UserTo;
 import com.javarush.kotovych.entity.Question;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.entity.Quest;
@@ -25,17 +28,16 @@ public class QuestController {
     @GetMapping(UriConstants.QUEST_URI)
     public ModelAndView showQuest(@RequestParam(value = Constants.NAME) String questName,
                                   @SessionAttribute(name = Constants.CURRENT_PART, required = false) String currentPart,
-                                  @SessionAttribute(value = Constants.ID, required = false) Long id,
+                                  @SessionAttribute(value = Constants.USER) UserTo user,
                                   HttpServletRequest request) {
         if (currentPart == null || questName == null) {
             return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
         }
 
-        User user = userService.get(id);
         setStatistics(user, currentPart);
         SessionAttributeSetter.addSessionAttribute(request, Constants.NAME, questName);
 
-        Quest quest = questService.get(questName);
+        QuestTo quest = questService.get(questName);
         if (quest != null) {
             ModelAndView modelAndView = new ModelAndView(chooseTemplate(currentPart));
             addRequiredObjects(modelAndView, quest, user, currentPart);
@@ -68,7 +70,7 @@ public class QuestController {
         }
     }
 
-    private void setStatistics(User user, String currentPart) {
+    private void setStatistics(UserTo user, String currentPart) {
         if (currentPart.startsWith(Constants.WIN)) {
             int wins = user.getWins();
             user.setWins(wins + 1);
@@ -81,15 +83,15 @@ public class QuestController {
     }
 
     private void addRequiredObjects(ModelAndView modelAndView,
-                                    Quest quest,
-                                    User user,
+                                    QuestTo quest,
+                                    UserTo user,
                                     String currentPart) {
-        Question question = quest.getQuestions().stream()
+        QuestionTo question = quest.getQuestions().stream()
                 .filter(o -> o.getName().equals(currentPart))
                 .findFirst().orElse(null);
 
         modelAndView.addObject(Constants.QUEST, quest);
         modelAndView.addObject(Constants.QUESTION, question);
-        modelAndView.addObject(Constants.AUTHOR, user.getId() == quest.getAuthor());
+        modelAndView.addObject(Constants.AUTHOR, user.getId() == quest.getAuthor().getId());
     }
 }

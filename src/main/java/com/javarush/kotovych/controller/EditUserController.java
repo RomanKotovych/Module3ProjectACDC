@@ -3,6 +3,7 @@ package com.javarush.kotovych.controller;
 import com.javarush.kotovych.constants.Constants;
 import com.javarush.kotovych.constants.LoggerConstants;
 import com.javarush.kotovych.constants.UriConstants;
+import com.javarush.kotovych.dto.UserTo;
 import com.javarush.kotovych.entity.User;
 import com.javarush.kotovych.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,9 @@ public class EditUserController {
 
 
     @GetMapping(UriConstants.EDIT_USER_URI)
-    public ModelAndView getEditUserPage(@SessionAttribute(value = Constants.ID, required = false) long id) {
+    public ModelAndView getEditUserPage(@SessionAttribute(value = Constants.USER, required = false) UserTo user) {
         ModelAndView modelAndView = new ModelAndView(Constants.EDIT_USER);
-        User user = userService.get(id);
-        log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, id);
+        log.info(LoggerConstants.USER_EDITS_ACCOUNT_LOG, user.getId());
         modelAndView.addObject(Constants.USER, user);
         return modelAndView;
     }
@@ -32,7 +32,7 @@ public class EditUserController {
     @PostMapping(UriConstants.EDIT_USER_URI)
     public ModelAndView editUser(@RequestParam(Constants.USERNAME) String editUsername,
                                  @RequestParam(Constants.PASSWORD) String editPassword,
-                                 @SessionAttribute(value = Constants.ID, required = true) Long id) {
+                                 @SessionAttribute(value = Constants.USER) UserTo user) {
 
         ModelAndView editPage = new ModelAndView(UriConstants.EDIT_USER_REDIRECT);
 
@@ -41,18 +41,10 @@ public class EditUserController {
             return editPage;
         }
 
-        User user = userService.get(id);
-        if (user.getLastUpdated() == null || System.currentTimeMillis() - user.getLastUpdated().getEpochSecond() * 1000 > Constants.EDITING_WAITING_TIME) {
-            user.setUsername(editUsername);
-            user.setPassword(editPassword);
-            user.setLastUpdated(Instant.now());
-            userService.update(user);
-            log.info(LoggerConstants.ACCOUNT_UPDATED_LOG, id);
-            return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
-        } else {
-            ModelAndView modelAndView = new ModelAndView(UriConstants.EDIT_USER_REDIRECT);
-            modelAndView.addObject(Constants.ERROR, Constants.YOU_CAN_ONLY_EDIT_ACCOUNT_ONCE_IN_10_MINUTES);
-            return modelAndView;
-        }
+        user.setUsername(editUsername);
+        user.setPassword(editPassword);
+        userService.update(user);
+        log.info(LoggerConstants.ACCOUNT_UPDATED_LOG, user.getId());
+        return new ModelAndView(Constants.MAIN_PAGE_REDIRECT);
     }
 }
